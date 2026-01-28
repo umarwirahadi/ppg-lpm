@@ -6,7 +6,7 @@ class Frontend extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('template');
-		$this->load->model('StrukturModel');
+		$this->load->model(['StrukturModel', 'DokumenModel']);
 	}
 
 	public function index() {
@@ -202,5 +202,19 @@ class Frontend extends CI_Controller {
 		];
 
 		return isset($kegiatan_list[$id]) ? $kegiatan_list[$id] : null;
+	}
+
+
+	public function dokumen() {
+		$this->template->set_title('Dokumen SPMI - LPM Politeknik Piksi Ganesha')
+			->set_meta_description('Akses dan unduh dokumen-dokumen penting terkait Sistem Penjaminan Mutu Internal (SPMI) di Politeknik Piksi Ganesha.')
+			->set_meta_keywords('dokumen SPMI, unduh dokumen, penjaminan mutu, Politeknik Piksi Ganesha');
+
+		$data = [
+			'active_menu' => 'dokumen'
+		];
+		$data['dokumen_list'] = $this->DokumenModel->get_all_dokumen(true);
+
+		$this->template->render('frontend/dokumen', $data);
 	}
 }

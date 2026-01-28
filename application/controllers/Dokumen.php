@@ -8,42 +8,71 @@ class Dokumen extends CI_Controller {
 		parent::__construct();
 		$this->load->library('template');
 		$this->load->model('DokumenModel');
-	}
-
-	public function index() {
-		// Check if user is logged in
 		if (!$this->session->userdata('admin_logged_in')) {
 			redirect('admin/login');
 			return;
 		}
+	}
 
-		// Dashboard data
-		$data['title'] = 'Dashboard Admin LPM';
-		$data['total_kegiatan'] = 12; // This would come from database
-		$data['kegiatan_aktif'] = 8;
-		$data['total_peserta'] = 145;
-		$data['kegiatan_bulan_ini'] = 3;
+	public function index() {
+				// Dashboard data
+		   $data['title'] = 'Daftar Dokumen SPMI';
+		   $data['dokumen_list'] = $this->DokumenModel->get_all_dokumen();
+		   $this->template->backend('backend/dokumen/index', $data);
+	}
 
-		// Recent activities (this would come from database)
-		$data['recent_activities'] = array(
-			array(
-				'title' => 'Workshop Akreditasi Prodi',
-				'date' => '2024-01-05',
-				'status' => 'Aktif'
-			),
-			array(
-				'title' => 'Pelatihan Kurikulum MBKM',
-				'date' => '2024-01-03',
-				'status' => 'Selesai'
-			),
-			array(
-				'title' => 'Seminar Penjaminan Mutu',
-				'date' => '2023-12-28',
-				'status' => 'Selesai'
-			)
+	public function create() {
+	
+
+		$data['title'] = 'Tambah Dokumen SPMI';
+		$this->template->backend('backend/dokumen/create', $data);
+	}
+
+	public function store() {
+		// Handle form submission to store new document
+		$title = $this->input->post('title');
+		$description = $this->input->post('description');
+		$is_active = $this->input->post('is_active') ? 1 : 0;
+
+		// File upload handling
+		$config['upload_path'] = FCPATH . 'assets/documents/';
+		$config['allowed_types'] = 'pdf|doc|docx';
+		$config['max_size'] = 2048; // 2MB
+
+		$this->load->library('upload', $config);
+
+		if (!$this->upload->do_upload('file')) {
+			$error = $this->upload->display_errors();
+			$this->session->set_flashdata('error', $error);
+			redirect('admin/dokumen/create');
+			return;
+		} else {
+			$file_data = $this->upload->data();
+			$file_url = 'assets/documents/' . $file_data['file_name'];
+		}
+
+		// Save to database
+		$data = array(
+			'title' => $title,
+			'description' => $description,
+			'file_url' => isset($file_url) ? $file_url : null,
+			'is_active' => $is_active,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		);
 
-		$this->template->backend('backend/dokumen/index', $data);
+		$this->DokumenModel->insert_dokumen($data);
+		redirect('dokumen');
+	}
+
+	public function edit($id){
+		$dokumen = $this->DokumenModel->get_dokumen_by_id($id);
+		if(!$dokumen){
+			show_404();
+		}
+		$data['title'] = 'Edit Dokumen SPMI';
+		$data['dokumen'] = $dokumen;
+		$this->template->backend('backend/dokumen/edit', $data);
 	}
 
 	

@@ -299,7 +299,12 @@
     </div>
     
     <!-- Scripts -->
+	 <script src="<?= base_url('assets/admin/assets/js/core/jquery-3.7.1.min.js') ?>"></script>
+	 <script src="<?= base_url('assets/admin/assets/js/plugin/datatables/datatables.min.js') ?>"></script>
+	 <script src="<?= base_url('assets/admin/assets/js/plugin/datatables/datatables.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+    <script src="<?= base_url('assets/js/app.js') ?>"></script>
+
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');

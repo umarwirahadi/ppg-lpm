@@ -4,15 +4,27 @@ class KegiatanModel extends CI_Model {
 
 	protected $table = 'kegiatan';
 	protected $fields = [
-		'id',
-		'nama_kegiatan',
-		'deskripsi',
-		'tanggal_mulai',
-		'tanggal_selesai',
-		'lokasi',
-		'is_active',
-		'created_at',
-		'updated_at'
+'id',
+'title',
+'slug',
+'description',
+'category',
+'organizer',
+'location',
+'start_date',
+'end_date',
+'timezone',
+'participants',
+'contact_person',
+'contact_phone',
+'document_url',
+'image_url',
+'status',
+'is_active',
+'created_by',
+'updated_by',
+'created_at',
+'updated_at'
 	];
 
 	public function get_all_kegiatan() {
@@ -21,5 +33,19 @@ class KegiatanModel extends CI_Model {
 
 	public function get_kegiatan_by_id($id) {
 		return $this->db->get_where($this->table, ['id' => $id])->row_array();
+	}
+
+	public function insert_kegiatan($data) {
+		return $this->db->insert($this->table, $data);
+	}
+
+	public function update_kegiatan($id, $data) {
+		$this->db->where('id', $id);
+		return $this->db->update($this->table, $data);
+	}
+
+	public function delete_kegiatan($id) {
+		$this->db->where('id', $id);
+		return $this->db->delete($this->table);
 	}
 }

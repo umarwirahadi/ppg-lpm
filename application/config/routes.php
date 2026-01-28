@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'frontend';
 $route['profile/struktur-organisasi'] = 'frontend/struktur_organisasi';
+$route['dokumen-spmi'] = 'frontend/dokumen';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
@@ -70,12 +71,12 @@ $route['admin/struktur/create'] = 'Struktur/create';
 $route['admin/struktur'] = 'Struktur/index';
 
 // Admin Kegiatan Routes - MUST be before general routes
-$route['admin/kegiatan/detail/(:num)'] = 'backend/Kegiatan/detail/$1';
-$route['admin/kegiatan/edit/(:num)'] = 'backend/Kegiatan/edit/$1';
-$route['admin/kegiatan/delete/(:num)'] = 'backend/Kegiatan/delete/$1';
-$route['admin/kegiatan/update/(:num)'] = 'backend/Kegiatan/update/$1';
-$route['admin/kegiatan/store'] = 'backend/Kegiatan/store';
-$route['admin/kegiatan/create'] = 'backend/Kegiatan/create';
+$route['admin/kegiatan/detail/(:num)'] = 'kegiatan/detail/$1';
+$route['admin/kegiatan/edit/(:num)'] = 'kegiatan/edit/$1';
+$route['admin/kegiatan/delete/(:num)'] = 'kegiatan/delete/$1';
+$route['admin/kegiatan/update/(:num)'] = 'kegiatan/update/$1';
+$route['admin/kegiatan/store'] = 'kegiatan/store';
+$route['admin/kegiatan/create'] = 'kegiatan/create';
 $route['admin/kegiatan'] = 'kegiatan/index';
 
 // Frontend Routes
@@ -92,6 +93,12 @@ $route['admin/contact'] = 'backend/Contact/index';
 
 // Dokumen management
 $route['admin/dokumen'] = 'Dokumen/index';
+$route['admin/dokumen/create'] = 'Dokumen/create';
+$route['admin/dokumen/store'] = 'Dokumen/store';
+$route['admin/dokumen/edit/(:num)'] = 'Dokumen/edit/$1';
+$route['admin/dokumen/update/(:num)'] = 'Dokumen/update/$1';
+$route['admin/dokumen/delete/(:num)'] = 'Dokumen/delete/$1';
+
 
 // General Admin Routes (catch-all for other admin modules) - MUST be LAST
 $route['admin/(:any)/(:any)/(:any)'] = 'backend/$1/$2/$3';

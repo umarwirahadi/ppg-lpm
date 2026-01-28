@@ -6,6 +6,7 @@ class DokumenModel extends CI_Model {
 	private $fields = [
 		'id',
 		'title',
+		'category',
 		'description',
 		'file_url',
 		'is_active',
@@ -32,6 +33,22 @@ class DokumenModel extends CI_Model {
 		$this->db->order_by('created_at', 'DESC');
 		return $this->db->get()->result();
 	
+	}
+
+	public function insert_dokumen($data) {
+		return $this->db->insert($this->table, $data);
+	}
+
+	public function get_dokumen_by_id($id) {
+		$this->db->select(implode(',', $this->fields));
+		$this->db->from($this->table);
+		$this->db->where('id', $id);
+		return $this->db->get()->row();
+	}
+
+	public function update_dokumen($id, $data) {
+		$this->db->where('id', $id);
+		return $this->db->update($this->table, $data);
 	}
 
 	
