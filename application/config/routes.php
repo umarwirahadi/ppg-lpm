@@ -70,6 +70,15 @@ $route['admin/struktur/store'] = 'Struktur/store';
 $route['admin/struktur/create'] = 'Struktur/create';
 $route['admin/struktur'] = 'Struktur/index';
 
+// Admin Prodi Routes - Using main controller directory
+$route['admin/prodi/detail/(:num)'] = 'Prodi/detail/$1';
+$route['admin/prodi/edit/(:num)'] = 'Prodi/edit/$1';
+$route['admin/prodi/update/(:num)'] = 'Prodi/update/$1';
+$route['admin/prodi/delete/(:num)'] = 'Prodi/delete/$1';
+$route['admin/prodi/store'] = 'Prodi/store';
+$route['admin/prodi/create'] = 'Prodi/create';
+$route['admin/prodi'] = 'Prodi/index';
+
 // Admin Kegiatan Routes - MUST be before general routes
 $route['admin/kegiatan/detail/(:num)'] = 'kegiatan/detail/$1';
 $route['admin/kegiatan/edit/(:num)'] = 'kegiatan/edit/$1';
