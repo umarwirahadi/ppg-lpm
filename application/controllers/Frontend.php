@@ -217,4 +217,67 @@ class Frontend extends CI_Controller {
 
 		$this->template->render('frontend/dokumen', $data);
 	}
+
+	public function detail_dokumen($id = null) {
+		if (!$id) {
+			redirect('dokumen');
+			return;
+		}
+
+		$doc = $this->DokumenModel->get_dokumen_by_id($id, true);
+		if (!$doc) {
+			show_404();
+			return;
+		}
+
+		$this->template->set_title($doc['judul'] . ' - Dokumen SPMI LPM Politeknik Piksi Ganesha')
+			->set_meta_description('Detail dokumen ' . $doc['judul'] . ' terkait Sistem Penjaminan Mutu Internal di Politeknik Piksi Ganesha')
+			->set_meta_keywords('dokumen SPMI, ' . strtolower($doc['judul']) . ', Politeknik Piksi Ganesha');
+
+		$data = [
+			'active_menu' => 'dokumen',
+			'dokumen' => $doc
+		];
+
+		$this->template->render('frontend/detail-dokumen', $data);
+	}
+
+	public function prodi(){
+		$this->load->model('ProdiModel');
+		$this->template->set_title('Program Studi - LPM Politeknik Piksi Ganesha')
+			->set_meta_description('Informasi lengkap tentang program studi yang dikelola oleh Lembaga Penjaminan Mutu Politeknik Piksi Ganesha.')
+			->set_meta_keywords('program studi, prodi, LPM, Politeknik Piksi Ganesha, informasi prodi');
+
+		$data = [
+			'active_menu' => 'prodi'
+		];
+		$data['prodi_list'] = $this->ProdiModel->get_all_prodi(true);
+
+		$this->template->render('frontend/prodi', $data);
+	}
+
+	public function detail_prodi($id = null) {
+		$this->load->model('ProdiModel');
+		if (!$id) {
+			redirect('prodi');
+			return;
+		}
+
+		$prodi = $this->ProdiModel->get_prodi_by_id($id, true);
+		if (!$prodi) {
+			show_404();
+			return;
+		}
+
+		$this->template->set_title($prodi['nama_prodi'] . ' - Program Studi LPM Politeknik Piksi Ganesha')
+			->set_meta_description('Detail program studi ' . $prodi['nama_prodi'] . ' yang dikelola oleh Lembaga Penjaminan Mutu Politeknik Piksi Ganesha')
+			->set_meta_keywords('program studi, ' . strtolower($prodi['nama_prodi']) . ', LPM, Politeknik Piksi Ganesha');
+
+		$data = [
+			'active_menu' => 'prodi',
+			'prodi' => $prodi
+		];
+
+		$this->template->render('frontend/detail-prodi', $data);
+	}
 }

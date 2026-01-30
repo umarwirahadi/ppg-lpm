@@ -244,7 +244,7 @@
                 </a>
             </div>
             <div class="menu-item">
-                <a href="<?= base_url('admin/pengaturan') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'pengaturan') ? 'active' : '' ?>">
+                <a href="<?= base_url('admin/settingconfig') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'pengaturan') ? 'active' : '' ?>">
                     <i class="fas fa-cog"></i>
                     Pengaturan
                 </a>
@@ -302,8 +302,10 @@
 	 <script src="<?= base_url('assets/admin/assets/js/core/jquery-3.7.1.min.js') ?>"></script>
 	 <script src="<?= base_url('assets/admin/assets/js/plugin/datatables/datatables.min.js') ?>"></script>
 	 <script src="<?= base_url('assets/admin/assets/js/plugin/datatables/datatables.min.js') ?>"></script>
-    <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
-    <script src="<?= base_url('assets/js/app.js') ?>"></script>
+        <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+        <script src="<?= base_url('assets/js/app.js') ?>"></script>
+        <!-- SettingConfig AJAX CRUD -->
+        <script src="<?= base_url('assets/js/app.settingconfig.js') ?>"></script>
 
     <script>
         function toggleSidebar() {

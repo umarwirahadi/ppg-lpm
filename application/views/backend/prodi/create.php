@@ -22,7 +22,13 @@
 
 				<div class="mb-3">
 					<label for="fakultas" class="form-label">Fakultas</label>
-					<input id="fakultas" name="fakultas" type="text" class="form-control" placeholder="Fakultas">
+					<select id="fakultas" name="fakultas" class="form-control">
+							<option value="">Pilih</option>
+							<option value="Ekonomi Bisnis">Ekonomi Bisnis</option>
+							<option value="Informatika">Informatika</option>
+							<option value="Kesehatan">Kesehatan</option>
+						</select>
+
 				</div>
 
 				<div class="row">

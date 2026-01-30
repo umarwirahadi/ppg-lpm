@@ -52,6 +52,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'frontend';
 $route['profile/struktur-organisasi'] = 'frontend/struktur_organisasi';
 $route['dokumen-spmi'] = 'frontend/dokumen';
+$route['data-program-studi'] = 'frontend/prodi';
+$route['data-program-studi/(:num)'] = 'frontend/detail_prodi/$1';
+
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
@@ -107,6 +110,14 @@ $route['admin/dokumen/store'] = 'Dokumen/store';
 $route['admin/dokumen/edit/(:num)'] = 'Dokumen/edit/$1';
 $route['admin/dokumen/update/(:num)'] = 'Dokumen/update/$1';
 $route['admin/dokumen/delete/(:num)'] = 'Dokumen/delete/$1';
+
+// setting konfiguration 
+$route['admin/settingconfig'] = 'Settingconfig/index';
+$route['admin/settingconfig/update'] = 'Settingconfig/update';
+$route['admin/settingconfig/edit/(:any)'] = 'Settingconfig/edit/$1';
+$route['admin/settingconfig/store'] = 'Settingconfig/store';
+$route['admin/settingconfig/create'] = 'Settingconfig/create';
+$route['admin/settingconfig/delete/(:any)'] = 'Settingconfig/delete/$1';
 
 
 // General Admin Routes (catch-all for other admin modules) - MUST be LAST
