@@ -31,6 +31,12 @@ class KegiatanModel extends CI_Model {
 		return $this->db->get($this->table)->result_array();
 	}
 
+	public function get_all_published_kegiatan() {
+		$this->db->where('status', 'published');
+		$this->db->where('is_active', 1);
+		return $this->db->get($this->table)->result_array();
+	}
+
 	public function get_kegiatan_by_id($id) {
 		return $this->db->get_where($this->table, ['id' => $id])->row_array();
 	}

@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class ProdiModel extends CI_Model {
 
-	protected $table = 'prodi';
+	protected $table = 'program_studi';
 	protected $fields = array('kode',
 'nama_prodi',
 'fakultas',

@@ -1,13 +1,5 @@
 <!-- Page Header -->
-<section class="hero-section" style="background-image: linear-gradient(rgba(44, 62, 80, 0.8), rgba(52, 152, 219, 0.8)), url('<?= base_url('assets/img/Kegiatanlpm.png') ?>'); background-repeat: no-repeat; height: 300px; background-size: cover; background-position: center;">
-	<div class="container">
-		<div class="hero-slide">
-			<h1 class="hero-title">Kegiatan LPM</h1>
-			<p class="hero-subtitle">Program dan Kegiatan Lembaga Penjaminan Mutu</p>
-			<p class="lead mb-4">Berbagai kegiatan dalam rangka peningkatan mutu pendidikan di Politeknik Piksi Ganesha</p>
-		</div>
-	</div>
-</section>
+
 
 <!-- Activities Content -->
 <section class="content-section">
@@ -38,7 +30,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- rows populated by JS -->
+                            <?php
+                            if (!empty($data['kegiatan_list']) && is_array($data['kegiatan_list'])) 
+                                foreach ($data['kegiatan_list'] as $g) :
+                            ?>
+                            <tr>
+                                <td><?= !empty($g['start_date']) ? date('d M Y H:i', strtotime($g['start_date'])) : '-' ?></td>
+                                <td><?= !empty($g['end_date']) ? date('d M Y H:i', strtotime($g['end_date'])) : '-' ?></td>
+                                <td><?= htmlspecialchars($g['title'] ?? '-') ?></td>
+                                <td class="d-none d-sm-table-cell text-muted small"><?= htmlspecialchars($g['location'] ?? '-') ?></td>
+                                <td class="d-none d-md-table-cell text-muted small"><?= htmlspecialchars($g['organizer'] ?? '-') ?></td>
+                                <td>
+                                    <?php
+                                    if (($g['status'] ?? '') === 'published') {
+                                        echo '<span class="badge bg-success">Published</span>';
+                                    } elseif (($g['status'] ?? '') === 'draft') {
+                                        echo '<span class="badge bg-secondary">Draft</span>';
+                                    } else {
+                                        echo '<span class="badge bg-info">' . htmlspecialchars($g['status'] ?? '') . '</span>';
+                                    }
+                                    ?>
+                                </td>
+                                <td class="text-end">
+                                    <a href="<?= site_url('kegiatan/detail/' . ($g['id'] ?? '')) ?>" class="btn btn-sm btn-primary me-1">Selengkapnya</a>
+                                    <?php if (!empty($g['document_url'])) : ?>
+                                    <a href="<?= htmlspecialchars($g['document_url']) ?>" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary">Unduh</a>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                            <?php
+                                endforeach;
+                            
+                            ?>
                         </tbody>
                     </table>
                 </div>

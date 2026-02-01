@@ -19,7 +19,11 @@
 					<select name="category" id="category" class="form-control form-control-lg" required>
                         <option value="">Pilih kategori</option>
                         <option value="SPMI">Dokumen SPMI</option>
-                        <option value="Standard">Dokumen Standard</option>
+                        <option value="Standard Mutu">Standard Mutu</option>
+                        <option value="Kebijakan Mutu">Kebijakan Mutu</option>
+                        <option value="Manual Mutu">Manual Mutu</option>
+                        <option value="Kebijakan Mutu">Kebijakan Mutu</option>
+                        <option value="Formulir Mutu">Formulir Mutu</option>
                         <option value="Audit">Audit</option>
                         <option value="Lainnya">Lainnya</option>
                     </select>

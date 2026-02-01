@@ -192,7 +192,7 @@ class Struktur extends CI_Controller {
             mkdir($upload_dir, 0755, true);
         }
         
-        $this->template->backend('backend/struktur/form', $data, 'admin');
+        $this->template->backend('backend/struktur/form', $data);
     }
 
     /**

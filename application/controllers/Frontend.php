@@ -6,7 +6,7 @@ class Frontend extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('template');
-		$this->load->model(['StrukturModel', 'DokumenModel']);
+		$this->load->model(['StrukturModel', 'DokumenModel','KegiatanModel']);
 	}
 
 	public function index() {
@@ -28,9 +28,7 @@ class Frontend extends CI_Controller {
 		$this->template->set_title('About Us - LPM Web Solutions')
 			->set_meta_description('Learn more about LPM Web Solutions - our team, mission, and commitment to delivering exceptional web development services.');
 
-		$data = [
-			'active_menu' => 'about'
-		];
+		$data['active_menu'] = 'about';
 
 		$this->template->render('frontend/about', $data);
 	}
@@ -83,8 +81,8 @@ class Frontend extends CI_Controller {
 			->set_meta_description('Program dan kegiatan Lembaga Penjaminan Mutu Politeknik Piksi Ganesha dalam rangka peningkatan mutu pendidikan tinggi.')
 			->set_meta_keywords('kegiatan LPM, audit mutu internal, workshop SPMI, evaluasi diri, monitoring mutu, Politeknik Piksi Ganesha');
 
-		$data = [
-			'active_menu' => 'kegiatan'
+		$data = ['active_menu' => 'kegiatan',
+		'kegiatan_list' => $this->KegiatanModel->get_all_published_kegiatan()
 		];
 
 		$this->template->render('frontend/kegiatan', $data);
@@ -98,21 +96,22 @@ class Frontend extends CI_Controller {
 		}
 
 		// Sample data - in real application, this would come from database
-		$kegiatan_data = $this->get_kegiatan_by_id($id);
+		$kegiatan_data = $this->KegiatanModel->get_kegiatan_by_id($id);
 
 		if (!$kegiatan_data) {
 			show_404();
 			return;
 		}
 
-		$this->template->set_title($kegiatan_data['judul'] . ' - LPM Politeknik Piksi Ganesha')
-			->set_meta_description('Detail kegiatan ' . $kegiatan_data['judul'] . ' yang diselenggarakan oleh Lembaga Penjaminan Mutu Politeknik Piksi Ganesha')
-			->set_meta_keywords('kegiatan LPM, ' . strtolower($kegiatan_data['judul']) . ', Politeknik Piksi Ganesha');
+		$this->template->set_title($kegiatan_data['title'] . ' - LPM Politeknik Piksi Ganesha')
+			->set_meta_description('Detail kegiatan ' . $kegiatan_data['title'] . ' yang diselenggarakan oleh Lembaga Penjaminan Mutu Politeknik Piksi Ganesha')
+			->set_meta_keywords('kegiatan LPM, ' . strtolower($kegiatan_data['title']) . ', Politeknik Piksi Ganesha');
 
 		$data = [
 			'active_menu' => 'kegiatan',
 			'kegiatan' => $kegiatan_data
 		];
+
 
 		$this->template->render('frontend/detail-kegiatan', $data);
 	}
