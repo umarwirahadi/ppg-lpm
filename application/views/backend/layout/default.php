@@ -9,6 +9,8 @@
     <link href="<?= base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- Custom Admin CSS -->
     <style>
         :root {
@@ -294,13 +296,13 @@
     </div>
     
     <!-- Scripts -->
-	 <script src="<?= base_url('assets/admin/assets/js/core/jquery-3.7.1.min.js') ?>"></script>
-	 <script src="<?= base_url('assets/admin/assets/js/plugin/datatables/datatables.min.js') ?>"></script>
-	 <script src="<?= base_url('assets/admin/assets/js/plugin/datatables/datatables.min.js') ?>"></script>
-        <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
-        <script src="<?= base_url('assets/js/app.js') ?>"></script>
-        <!-- SettingConfig AJAX CRUD -->
-        <script src="<?= base_url('assets/js/app.settingconfig.js') ?>"></script>
+	<script src="<?= base_url('assets/admin/assets/js/core/jquery-3.7.1.min.js') ?>"></script>
+	<script src="<?= base_url('assets/admin/assets/js/plugin/datatables/datatables.min.js') ?>"></script>
+	<script src="<?= base_url('assets/admin/assets/js/plugin/datatables/datatables.min.js') ?>"></script>
+    <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="<?= base_url('assets/js/app.js') ?>"></script>        
 
     <script>
         function toggleSidebar() {

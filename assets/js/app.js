@@ -283,6 +283,82 @@ $(document).ready(function() {
             $('.navbar').removeClass('scrolled');
         }
     });
+
+
+//setting modal create
+
+    $('#btnAddSetting').on('click', function() {
+        let url = $(this).data('url');
+        $.ajax({
+            url: url,
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.html) {
+                    var modalContainer = $('<div class="modal fade" id="modalCreateSetting" tabindex="-1" aria-labelledby="modalCreateSettingLabel" aria-hidden="true"></div>');
+                    modalContainer.html(response.html);
+                    $('body').append(modalContainer);
+                    var modal = new bootstrap.Modal(document.getElementById('modalCreateSetting'));
+                    modal.show();
+                    modalContainer.on('hidden.bs.modal', function () {
+                        modalContainer.remove();
+                    });
+                }
+            },
+            error: function() {
+                alert('Gagal memuat formulir. Silakan coba lagi.');
+            }
+        });
+    }); 
+
+    $(document).on('click','#table-setting .btn-edit-setting', function() {
+        let url = $(this).data('url');
+        $.ajax({
+            url: url,
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.html) {
+                    $('#modalSetting').html(response.html).modal('show');
+                }
+            }
+            });
+    });
+
+    $(document).on('click','#table-setting .btn-delete-setting', function() {
+        let url = $(this).data('url');
+        swal.fire({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this setting!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire(response.message, {
+                                icon: "success",
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire("Error deleting setting: " + response.message, {
+                                icon: "error",
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+
 });
 
 // DataTable initialization for dokumenTable with search and export hookup
@@ -342,4 +418,5 @@ $(function () {
             }
         }
     });
+
 });

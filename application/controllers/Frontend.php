@@ -283,7 +283,7 @@ class Frontend extends CI_Controller {
 
 		$data = [
 			'active_menu' => 'laporan',
-			'laporans' => $this->LaporanModel->get_all_laporan()
+			'laporan_list' => $this->LaporanModel->get_all_laporan()
 		];
 
 		$this->template->render('frontend/laporan', $data);

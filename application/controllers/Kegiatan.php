@@ -1,5 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+/**
+ * Kegiatan Controller
+ * 
+ * @property CI_Loader $load
+ * @property CI_Input $input
+ * @property CI_Session $session
+ * @property CI_Upload $upload
+ * @property CI_Form_validation $form_validation
+ * @property Template $template
+ * @property KegiatanModel $KegiatanModel
+ */
 class Kegiatan extends CI_Controller {
 
 	public function __construct() {
@@ -88,7 +100,7 @@ class Kegiatan extends CI_Controller {
 		// Handle uploads: document and image
 		$uploadErrors = [];
 		// ensure directories exist
-		$docPath = FCPATH . 'documents/kegiatan/';
+		$docPath = FCPATH . 'assets/documents/kegiatan/';
 		$imgPath = FCPATH . 'assets/img/kegiatan/';
 		if (!is_dir($docPath)) @mkdir($docPath, 0755, true);
 		if (!is_dir($imgPath)) @mkdir($imgPath, 0755, true);
@@ -100,7 +112,7 @@ class Kegiatan extends CI_Controller {
 			$this->upload->initialize($config);
 			if ($this->upload->do_upload('document_file')) {
 				$f = $this->upload->data();
-				$save['document_url'] = 'documents/kegiatan/' . $f['file_name'];
+				$save['document_url'] = 'assets/documents/kegiatan/' . $f['file_name'];
 			} else {
 				$uploadErrors[] = $this->upload->display_errors('', '');
 			}
@@ -211,7 +223,7 @@ class Kegiatan extends CI_Controller {
 
 		// Handle uploads (replace and remove old files)
 		$uploadErrors = [];
-		$docPath = FCPATH . 'documents/kegiatan/';
+		$docPath = FCPATH . 'assets/documents/kegiatan/';
 		$imgPath = FCPATH . 'assets/img/kegiatan/';
 		if (!is_dir($docPath)) @mkdir($docPath, 0755, true);
 		if (!is_dir($imgPath)) @mkdir($imgPath, 0755, true);
@@ -223,7 +235,7 @@ class Kegiatan extends CI_Controller {
 			$this->upload->initialize($config);
 			if ($this->upload->do_upload('document_file')) {
 				$f = $this->upload->data();
-				$save['document_url'] = 'documents/kegiatan/' . $f['file_name'];
+				$save['document_url'] = 'assets/documents/kegiatan/' . $f['file_name'];
 				// delete old
 				if (!empty($kegiatan['document_url'])) {
 					$old = FCPATH . $kegiatan['document_url'];

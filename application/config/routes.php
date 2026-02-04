@@ -57,6 +57,10 @@ $route['data-program-studi/(:num)'] = 'frontend/detail_prodi/$1';
 $route['data-laporan'] = 'frontend/laporan';
 $route['data-laporan/(:num)'] = 'frontend/detail_laporan/$1';
 
+// Frontend Routes
+$route['kegiatan'] = 'frontend/kegiatan';
+$route['kegiatan/detail-kegiatan/(:num)'] = 'frontend/detail_kegiatan/$1';
+
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
@@ -95,17 +99,14 @@ $route['admin/kegiatan'] = 'kegiatan/index';
 
 
 // ADMIN Laporan Routes
-$route['admin/laporan/'] = 'laporan/index';
+$route['admin/laporan'] = 'laporan/index';
 $route['admin/laporan/create'] = 'laporan/create';
 $route['admin/laporan/store'] = 'laporan/store';
 $route['admin/laporan/edit/(:num)'] = 'laporan/edit/$1';
 $route['admin/laporan/update/(:num)'] = 'laporan/update/$1';
 $route['admin/laporan/delete/(:num)'] = 'laporan/delete/$1';
 
-// Frontend Routes
-$route['kegiatan/detail/(:num)'] = 'frontend/kegiatan/detail/$1';
-$route['kegiatan'] = 'frontend/kegiatan';
-$route['kegiatan/(:any)'] = 'frontend/kegiatan/$1';
+
 
 //contact admin page
 $route['admin/contact/detail/(:num)'] = 'backend/Contact/detail/$1';
@@ -124,12 +125,11 @@ $route['admin/dokumen/delete/(:num)'] = 'Dokumen/delete/$1';
 
 // setting konfiguration 
 $route['admin/settingconfig'] = 'Settingconfig/index';
-$route['admin/settingconfig/update'] = 'Settingconfig/update';
-$route['admin/settingconfig/edit/(:any)'] = 'Settingconfig/edit/$1';
-$route['admin/settingconfig/store'] = 'Settingconfig/store';
 $route['admin/settingconfig/create'] = 'Settingconfig/create';
-$route['admin/settingconfig/delete/(:any)'] = 'Settingconfig/delete/$1';
-
+$route['admin/settingconfig/store'] = 'Settingconfig/store';
+$route['admin/settingconfig/edit/(:num)'] = 'Settingconfig/edit/$1';
+$route['admin/settingconfig/update/(:num)'] = 'Settingconfig/update/$1';
+$route['admin/settingconfig/delete/(:num)'] = 'Settingconfig/delete/$1';
 
 // General Admin Routes (catch-all for other admin modules) - MUST be LAST
 $route['admin/(:any)/(:any)/(:any)'] = 'backend/$1/$2/$3';

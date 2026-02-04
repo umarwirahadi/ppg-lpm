@@ -1,11 +1,27 @@
 <!-- Settings Management Page -->
 <div class="container-fluid py-4">
+	<?php if ($this->session->flashdata('success')): ?>
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			<?= $this->session->flashdata('success') ?>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	<?php endif; ?>
+	
+	<?php if ($this->session->flashdata('error')): ?>
+		<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			<?= $this->session->flashdata('error') ?>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	<?php endif; ?>
+
 	<div class="d-flex justify-content-between align-items-center mb-3">
 		<h2 class="h4 mb-0">Site Settings</h2>
-		<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreateSetting">Add Setting</button>
+		<button type="button" class="btn btn-primary" id="btnAddSetting" data-url="<?= site_url('admin/settingconfig/create') ?>">
+			<i class="fas fa-plus me-1"></i>Add Setting
+		</button>
 	</div>
 	<div class="table-responsive">
-		<table class="table table-bordered table-hover align-middle bg-white">
+		<table class="table table-bordered table-hover align-middle bg-white" id="table-setting">
 			<thead class="table-light">
 				<tr>
 					<th>Key</th>
@@ -26,13 +42,13 @@
 							<td><?= htmlspecialchars($row['description']) ?></td>
 							<td><?= htmlspecialchars($row['updated_at']) ?></td>
 							<td>
-								<button class="btn btn-sm btn-warning me-1" data-bs-toggle="modal" data-bs-target="#modalEditSetting" 
-									data-key="<?= htmlspecialchars($row['setting_key']) ?>"
-									data-value="<?= htmlspecialchars($row['setting_value']) ?>"
-									data-group="<?= htmlspecialchars($row['setting_group']) ?>"
-									data-description="<?= htmlspecialchars($row['description']) ?>"
-								>Edit</button>
-								<a href="<?= site_url('backend/setting/delete/'.$row['setting_key']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this setting?')">Delete</a>
+								<button class="btn btn-sm btn-warning me-1 btn-edit-setting" data-url="<?= site_url('admin/settingconfig/edit/' . $row['id']) ?>" title="Edit setting">
+									<i class="fas fa-edit"></i> Edit
+								</button>
+								<button class="btn btn-sm btn-danger me-1 btn-delete-setting" data-url="<?= site_url('admin/settingconfig/delete/' . $row['id']) ?>" title="Delete setting">
+									<i class="fas fa-trash"></i> Delete
+								</button>
+								
 							</td>
 						</tr>
 					<?php endforeach; ?>
@@ -44,21 +60,7 @@
 	</div>
 </div>
 
-<?php include __DIR__.'/create.php'; ?>
-<?php include __DIR__.'/edit.php'; ?>
 
-<script>
-// Fill edit modal with row data
-document.addEventListener('DOMContentLoaded', function() {
-	var editModal = document.getElementById('modalEditSetting');
-	if (editModal) {
-		editModal.addEventListener('show.bs.modal', function (event) {
-			var button = event.relatedTarget;
-			editModal.querySelector('[name=setting_key]').value = button.getAttribute('data-key');
-			editModal.querySelector('[name=setting_value]').value = button.getAttribute('data-value');
-			editModal.querySelector('[name=setting_group]').value = button.getAttribute('data-group');
-			editModal.querySelector('[name=description]').value = button.getAttribute('data-description');
-		});
-	}
-});
-</script>
+<div class="modal fade" id="modalSetting" tabindex="-1" aria-labelledby="modalCreateSettingLabel" aria-hidden="true">
+</div>
+

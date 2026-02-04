@@ -1,5 +1,5 @@
 <!-- Modal: Create Setting -->
-<div class="modal fade" id="modalCreateSetting" tabindex="-1" aria-labelledby="modalCreateSettingLabel" aria-hidden="true">
+
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form method="post" action="<?= site_url('admin/settingconfig/store') ?>">
