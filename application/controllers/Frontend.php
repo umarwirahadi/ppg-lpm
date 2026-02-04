@@ -71,12 +71,8 @@ class Frontend extends CI_Controller {
 		$this->template->render('frontend/struktur-organisasi', $data);
 	}
 
-	public function kegiatan($action = null, $id = null)
+	public function kegiatan()
 	{
-		if ($action === 'detail' && $id) {
-			return $this->detail_kegiatan($id);
-		}
-
 		$this->template->set_title('Kegiatan - LPM Politeknik Piksi Ganesha')
 			->set_meta_description('Program dan kegiatan Lembaga Penjaminan Mutu Politeknik Piksi Ganesha dalam rangka peningkatan mutu pendidikan tinggi.')
 			->set_meta_keywords('kegiatan LPM, audit mutu internal, workshop SPMI, evaluasi diri, monitoring mutu, Politeknik Piksi Ganesha');
@@ -84,7 +80,6 @@ class Frontend extends CI_Controller {
 		$data = ['active_menu' => 'kegiatan',
 		'kegiatan_list' => $this->KegiatanModel->get_all_published_kegiatan()
 		];
-
 		$this->template->render('frontend/kegiatan', $data);
 	}
 
@@ -278,5 +273,44 @@ class Frontend extends CI_Controller {
 		];
 
 		$this->template->render('frontend/detail-prodi', $data);
+	}
+
+	public function laporan() {
+		$this->load->model('LaporanModel');
+		$this->template->set_title('Laporan - LPM Politeknik Piksi Ganesha')
+			->set_meta_description('Kumpulan laporan terkait penjaminan mutu pendidikan di Politeknik Piksi Ganesha yang disusun oleh Lembaga Penjaminan Mutu (LPM).')
+			->set_meta_keywords('laporan mutu, laporan pendidikan, LPM, Politeknik Piksi Ganesha, penjaminan mutu');
+
+		$data = [
+			'active_menu' => 'laporan',
+			'laporans' => $this->LaporanModel->get_all_laporan()
+		];
+
+		$this->template->render('frontend/laporan', $data);
+	}
+
+	public function detail_laporan($id = null) {
+		$this->load->model('LaporanModel');
+		if (!$id) {
+			redirect('laporan');
+			return;
+		}
+
+		$laporan = $this->LaporanModel->get_laporan_by_id($id);
+		if (!$laporan) {
+			show_404();
+			return;
+		}
+
+		$this->template->set_title($laporan->title . ' - Laporan LPM Politeknik Piksi Ganesha')
+			->set_meta_description('Detail laporan ' . $laporan->title . ' terkait penjaminan mutu di Politeknik Piksi Ganesha')
+			->set_meta_keywords('laporan mutu, ' . strtolower($laporan->title) . ', LPM, Politeknik Piksi Ganesha');
+
+		$data = [
+			'active_menu' => 'laporan',
+			'laporan' => $laporan
+		];
+
+		$this->template->render('frontend/detail-laporan', $data);
 	}
 }

@@ -58,7 +58,7 @@
                         <a class="nav-link <?= (isset($active_menu) && $active_menu == 'prodi') ? 'active' : '' ?>" href="<?= base_url('data-program-studi') ?>">Prodi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= (isset($active_menu) && $active_menu == 'akreditasi') ? 'active' : '' ?>" href="<?= base_url('akreditasi') ?>">Akreditasi</a>
+                        <a class="nav-link <?= (isset($active_menu) && $active_menu == 'laporan') ? 'active' : '' ?>" href="<?= base_url('data-laporan') ?>">Laporan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= (isset($active_menu) && $active_menu == 'dokumen-spmi') ? 'active' : '' ?>" href="<?= base_url('dokumen-spmi') ?>">Dokumen SPMI</a>

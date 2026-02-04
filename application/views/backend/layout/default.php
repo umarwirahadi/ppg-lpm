@@ -219,18 +219,13 @@
                     Dokumen SPMI
                 </a>
             </div>
+            
             <div class="menu-item">
                 <a href="<?= base_url('admin/prodi') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'prodi') ? 'active' : '' ?>">
                     <i class="fas fa-graduation-cap"></i>
                     Program Studi
                 </a>
-            </div>
-            <div class="menu-item">
-                <a href="<?= base_url('admin/audit') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'audit') ? 'active' : '' ?>">
-                    <i class="fas fa-clipboard-check"></i>
-                    Audit Internal
-                </a>
-            </div>
+            </div>            
             <div class="menu-item">
                 <a href="<?= base_url('admin/akreditasi') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'akreditasi') ? 'active' : '' ?>">
                     <i class="fas fa-certificate"></i>
@@ -240,7 +235,7 @@
             <div class="menu-item">
                 <a href="<?= base_url('admin/laporan') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'laporan') ? 'active' : '' ?>">
                     <i class="fas fa-chart-bar"></i>
-                    Laporan
+                    Laporan AMI
                 </a>
             </div>
             <div class="menu-item">

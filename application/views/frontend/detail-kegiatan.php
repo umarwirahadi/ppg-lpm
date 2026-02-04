@@ -1,40 +1,6 @@
-<!-- Page Header -->
-<section class="hero-section" style="background-image: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.9)), url('<?= base_url('assets/img/kegiatan-detail-bg.jpg') ?>')">
-    <div class="container">
-        <div class="hero-slide">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1 class="hero-title"><?= isset($kegiatan['judul']) ? $kegiatan['judul'] : 'Detail Kegiatan LPM' ?></h1>
-                    <p class="hero-subtitle"><?= isset($kegiatan['kategori']) ? $kegiatan['kategori'] : 'Program Lembaga Penjaminan Mutu' ?></p>
-                </div>
-                <div class="col-md-4 text-end">
-                    <?php if(isset($kegiatan['status'])): ?>
-                        <?php 
-                        $status_class = '';
-                        switch($kegiatan['status']) {
-                            case 'Berlangsung':
-                                $status_class = 'bg-success';
-                                break;
-                            case 'Akan Datang':
-                                $status_class = 'bg-primary';
-                                break;
-                            case 'Selesai':
-                                $status_class = 'bg-secondary';
-                                break;
-                            default:
-                                $status_class = 'bg-info';
-                        }
-                        ?>
-                        <span class="badge <?= $status_class ?> fs-6 px-3 py-2"><?= $kegiatan['status'] ?></span>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Activity Detail Content -->
-<section class="content-section">
+<section class="content-section mt-5">
     <div class="container">
         <div class="row">
             <!-- Main Content -->

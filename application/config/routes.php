@@ -54,6 +54,8 @@ $route['profile/struktur-organisasi'] = 'frontend/struktur_organisasi';
 $route['dokumen-spmi'] = 'frontend/dokumen';
 $route['data-program-studi'] = 'frontend/prodi';
 $route['data-program-studi/(:num)'] = 'frontend/detail_prodi/$1';
+$route['data-laporan'] = 'frontend/laporan';
+$route['data-laporan/(:num)'] = 'frontend/detail_laporan/$1';
 
 
 $route['404_override'] = '';
@@ -90,6 +92,15 @@ $route['admin/kegiatan/update/(:num)'] = 'kegiatan/update/$1';
 $route['admin/kegiatan/store'] = 'kegiatan/store';
 $route['admin/kegiatan/create'] = 'kegiatan/create';
 $route['admin/kegiatan'] = 'kegiatan/index';
+
+
+// ADMIN Laporan Routes
+$route['admin/laporan/'] = 'laporan/index';
+$route['admin/laporan/create'] = 'laporan/create';
+$route['admin/laporan/store'] = 'laporan/store';
+$route['admin/laporan/edit/(:num)'] = 'laporan/edit/$1';
+$route['admin/laporan/update/(:num)'] = 'laporan/update/$1';
+$route['admin/laporan/delete/(:num)'] = 'laporan/delete/$1';
 
 // Frontend Routes
 $route['kegiatan/detail/(:num)'] = 'frontend/kegiatan/detail/$1';
