@@ -17,7 +17,7 @@
         </div>
         <div class="card-body p-2">
             <div class="table-responsive">
-                <table id="kegiatanTable" class="table table-bordered table-striped mb-0">
+                <table id="kegiatanTable" class="table table-bordered table-striped mb-0 dataTable">
                     <thead class="thead-light">
                         <tr>
                             <th>ID</th>

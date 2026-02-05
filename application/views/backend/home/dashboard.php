@@ -157,22 +157,22 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <a href="<?= base_url('admin/kegiatan/add') ?>" class="btn btn-primary w-100">
+                        <a href="<?= site_url('admin/kegiatan/create') ?>" class="btn btn-primary w-100">
                             <i class="fas fa-plus me-2"></i>Tambah Kegiatan
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="<?= base_url('admin/dokumen') ?>" class="btn btn-success w-100">
+                        <a href="<?= site_url('admin/dokumen/create') ?>" class="btn btn-success w-100">
                             <i class="fas fa-file-upload me-2"></i>Upload Dokumen
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="<?= base_url('admin/audit') ?>" class="btn btn-warning w-100">
+                        <a href="<?= site_url('admin/audit') ?>" class="btn btn-warning w-100">
                             <i class="fas fa-clipboard-check me-2"></i>Buat Audit
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="<?= base_url('admin/laporan') ?>" class="btn btn-info w-100">
+                        <a href="<?= site_url('admin/laporan') ?>" class="btn btn-info w-100">
                             <i class="fas fa-chart-bar me-2"></i>Lihat Laporan
                         </a>
                     </div>

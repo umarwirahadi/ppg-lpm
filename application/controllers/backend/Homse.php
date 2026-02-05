@@ -4,12 +4,11 @@ class Home extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->library('template');
-		$this->load->library('session');
+		$this->load->library(['template', 'session', 'auth']);
 		
-		// Check if user is logged in (simple check)
-		if (!$this->session->userdata('admin_logged_in') && $this->router->method !== 'login') {
-			redirect('admin/login');
+		// Check authentication for all methods except login
+		if ($this->router->method !== 'login') {
+			$this->auth->require_login();
 		}
 	}
 

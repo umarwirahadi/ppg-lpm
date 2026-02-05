@@ -6,12 +6,11 @@ class Dokumen extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->library('template');
+		$this->load->library(['template', 'auth']);
 		$this->load->model('DokumenModel');
-		if (!$this->session->userdata('admin_logged_in')) {
-			redirect('admin/login');
-			return;
-		}
+		
+		// Check authentication
+		$this->auth->require_login();
 	}
 
 	public function index() {

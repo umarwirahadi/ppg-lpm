@@ -14,12 +14,11 @@ class Settingconfig extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->library('template');
+		$this->load->library(['template', 'auth']);
 		$this->load->model('SettingModel');
-		if (!$this->session->userdata('admin_logged_in')) {
-			redirect('admin/login');
-			return;
-		}
+		
+		// Check authentication - Admin only
+		$this->auth->require_admin();
 	}
 
 	public function index() {

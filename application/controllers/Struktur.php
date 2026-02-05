@@ -5,16 +5,12 @@ class Struktur extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->library('template');
-        $this->load->library('session');
-        $this->load->library('form_validation');
+        $this->load->library(['template', 'session', 'form_validation', 'auth']);
         $this->load->model('StrukturModel');
         $this->load->helper(['url', 'form', 'file']);
         
-        // Check if user is logged in
-        if (!$this->session->userdata('admin_logged_in')) {
-            redirect('admin/login');
-        }
+        // Check authentication
+        $this->auth->require_login();
     }
 
     /**

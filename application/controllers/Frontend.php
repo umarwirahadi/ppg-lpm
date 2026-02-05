@@ -313,4 +313,15 @@ class Frontend extends CI_Controller {
 
 		$this->template->render('frontend/detail-laporan', $data);
 	}
+
+	public function settings() {
+		$this->template->set_title('Settings - LPM Web Solutions')
+			->set_meta_description('Manage your account settings and preferences at LPM Web Solutions.');
+
+		$data = [
+			'active_menu' => 'settings'
+		];
+
+		$this->template->render('frontend/settings', $data);
+	}
 }

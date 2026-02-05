@@ -14,7 +14,7 @@ $statusStyle = $statusStyles[$status] ?? ['class' => 'status-default', 'label' =
 $hasFile = !empty($laporan->file_path);
 $fileExt = $hasFile ? strtolower(pathinfo($laporan->file_path, PATHINFO_EXTENSION)) : '';
 $fileName = $hasFile ? basename($laporan->file_path) : '';
-$filePath = $hasFile ? base_url('assets/documents/' . $laporan->file_path) : '';
+$filePath = $hasFile ? base_url($laporan->file_path) : '';
 
 // File type info
 $fileTypes = [
@@ -193,7 +193,7 @@ $fileType = $fileTypes[$fileExt] ?? ['label' => strtoupper($fileExt) . ' File', 
                                 Semua Laporan
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="ms-auto" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
                             </a>
-                            <a href="<?= site_url('data-dokumen') ?>" class="quick-link">
+                            <a href="<?= site_url('dokumen-spmi') ?>" class="quick-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0z"/></svg>
                                 Dokumen Lainnya
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="ms-auto" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>

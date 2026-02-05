@@ -24,9 +24,9 @@
                 <div class="footer-contact">
                     <span class="footer-link-title">Contact</span>
                     <address>
-                        Jl. Contoh No. 123, Bandung<br>
-                        Telp: (022) 1234-5678<br>
-                        Email: <a href="mailto:info@lpmweb.com">info@lpmweb.com</a>
+                        Jl. Jend. Gatot Subroto 301 Bandung 40274<br>
+                        Telp: (022) 87340030<br>
+                        Email: <a href="mailto:info@lpmweb.com">lpm@piksi.ac.id</a>
                     </address>
                 </div>
                 <div class="footer-social">

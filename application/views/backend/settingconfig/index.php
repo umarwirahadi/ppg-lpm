@@ -21,7 +21,7 @@
 		</button>
 	</div>
 	<div class="table-responsive">
-		<table class="table table-bordered table-hover align-middle bg-white" id="table-setting">
+		<table class="table table-bordered table-hover align-middle bg-white dataTable" id="table-setting">
 			<thead class="table-light">
 				<tr>
 					<th>Key</th>

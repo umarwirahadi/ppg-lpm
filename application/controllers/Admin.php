@@ -1,23 +1,32 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Admin Controller
+ * 
+ * @property CI_Loader $load
+ * @property CI_Input $input
+ * @property CI_Session $session
+ * @property Template $template
+ * @property Auth $auth
+ * @property UserModel $UserModel
+ * @property StrukturModel $StrukturModel
+ */
 class Admin extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->library('template');
-		$this->load->library('session');
+		$this->load->library(['template', 'session', 'auth']);
+		$this->load->model('UserModel');
 	}
 
 	public function index() {
-		// Check if user is logged in
-		if (!$this->session->userdata('admin_logged_in')) {
-			redirect('admin/login');
-			return;
-		}
+		// Check authentication
+		$this->auth->require_login();
 
 		// Dashboard data
 		$data['title'] = 'Dashboard Admin LPM';
+		$data['user'] = $this->auth->user();
 		$data['total_kegiatan'] = 12; // This would come from database
 		$data['kegiatan_aktif'] = 8;
 		$data['total_peserta'] = 145;
@@ -47,7 +56,7 @@ class Admin extends CI_Controller {
 
 	public function login() {
 		// If already logged in, redirect to dashboard
-		if ($this->session->userdata('admin_logged_in')) {
+		if ($this->auth->is_logged_in()) {
 			redirect('admin');
 			return;
 		}
@@ -56,15 +65,18 @@ class Admin extends CI_Controller {
 		if ($this->input->post()) {
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
+			$remember = $this->input->post('remember') ? true : false;
 			
-			// Simple authentication (in production, use proper hash and database)
-			if ($username === 'admin' && $password === 'admin123') {
-				$this->session->set_userdata('admin_logged_in', true);
-				$this->session->set_userdata('admin_username', $username);
-				redirect('admin');
+			// Authenticate using Auth library
+			$result = $this->auth->login($username, $password, $remember);
+			
+			if ($result['success']) {
+				// Get redirect URL or default to admin dashboard
+				$redirect_url = $this->auth->get_redirect_url('admin');
+				redirect($redirect_url);
 				return;
 			} else {
-				$data['error'] = 'Username atau password salah';
+				$data['error'] = $result['message'];
 			}
 		}
 
@@ -73,18 +85,15 @@ class Admin extends CI_Controller {
 	}
 
 	public function logout() {
-		$this->session->unset_userdata('admin_logged_in');
-		$this->session->unset_userdata('admin_username');
+		$this->auth->logout();
+		$this->session->set_flashdata('success', 'Anda berhasil logout.');
 		redirect('admin/login');
 	}
 
 	// Method to handle kegiatan management
 	public function kegiatan() {
-		// Check if user is logged in
-		if (!$this->session->userdata('admin_logged_in')) {
-			redirect('admin/login');
-			return;
-		}
+		// Check authentication
+		$this->auth->require_login();
 
 		$data['title'] = 'Kelola Kegiatan';
 		$this->template->backend('backend/kegiatan/index', $data, 'admin');
@@ -92,11 +101,8 @@ class Admin extends CI_Controller {
 
 	// Method to handle struktur organisasi management
 	public function struktur() {
-		// Check if user is logged in
-		if (!$this->session->userdata('admin_logged_in')) {
-			redirect('admin/login');
-			return;
-		}
+		// Check authentication
+		$this->auth->require_login();
 
 		$this->load->model('StrukturModel');
 		$data['title'] = 'Kelola Struktur Organisasi';

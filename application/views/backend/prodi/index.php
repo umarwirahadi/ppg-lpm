@@ -15,7 +15,7 @@
 		</div>
 		<div class="card-body p-2">
 			<div class="table-responsive">
-				<table id="prodiTable" class="table table-bordered table-striped mb-0">
+				<table id="prodiTable" class="table table-bordered table-striped mb-0 dataTable">
 					<thead class="thead-light">
 						<tr>
 							<th>ID</th>
@@ -23,13 +23,10 @@
 							<th>Nama Prodi</th>
 							<th>Fakultas</th>
 							<th>Ketua Prodi</th>
-							<th>Sekretaris</th>
 							<th>Akreditasi</th>
 							<th>Tgl Berlaku</th>
 							<th>Tgl Berakhir</th>
 							<th>No SK</th>
-							<th>Keterangan</th>
-							<th>Dibuat</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -42,13 +39,10 @@
 									<td><?= htmlspecialchars(isset($prodi['nama_prodi']) ? $prodi['nama_prodi'] : '') ?></td>
 									<td><?= htmlspecialchars(isset($prodi['fakultas']) ? $prodi['fakultas'] : '') ?></td>
 									<td><?= htmlspecialchars(isset($prodi['ketua_prodi']) ? $prodi['ketua_prodi'] : '') ?></td>
-									<td><?= htmlspecialchars(isset($prodi['sekretaris_prodi']) ? $prodi['sekretaris_prodi'] : '') ?></td>
 									<td><?= htmlspecialchars(isset($prodi['akreditasi']) ? $prodi['akreditasi'] : '') ?></td>
 									<td><?= htmlspecialchars(isset($prodi['tgl_berlaku_akreditasi']) ? $prodi['tgl_berlaku_akreditasi'] : '') ?></td>
 									<td><?= htmlspecialchars(isset($prodi['tgl_berakhir_akreditasi']) ? $prodi['tgl_berakhir_akreditasi'] : '') ?></td>
 									<td><?= htmlspecialchars(isset($prodi['no_sk']) ? $prodi['no_sk'] : '') ?></td>
-									<td><?= htmlspecialchars(isset($prodi['keterangan']) ? $prodi['keterangan'] : '') ?></td>
-									<td><?= htmlspecialchars(isset($prodi['created_at']) ? $prodi['created_at'] : '') ?></td>
 									<td>
 										<a href="<?= site_url('prodi/edit/' . (isset($prodi['id']) ? $prodi['id'] : '')) ?>" class="btn btn-sm btn-warning">Edit</a>
 										<a href="<?= site_url('prodi/delete/' . (isset($prodi['id']) ? $prodi['id'] : '')) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data prodi ini?');">Hapus</a>

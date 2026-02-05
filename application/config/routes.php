@@ -57,6 +57,14 @@ $route['data-program-studi/(:num)'] = 'frontend/detail_prodi/$1';
 $route['data-laporan'] = 'frontend/laporan';
 $route['data-laporan/(:num)'] = 'frontend/detail_laporan/$1';
 
+// Profile LPM Routes (Frontend)
+$route['profile'] = 'Profile/index';
+$route['profile/tentang'] = 'Profile/tentang';
+$route['profile/visi-misi'] = 'Profile/visi_misi';
+$route['profile/tugas'] = 'Profile/tugas';
+$route['profile/api'] = 'Profile/api_get';
+$route['profile/api/(:any)'] = 'Profile/api_get/$1';
+
 // Frontend Routes
 $route['kegiatan'] = 'frontend/kegiatan';
 $route['kegiatan/detail-kegiatan/(:num)'] = 'frontend/detail_kegiatan/$1';
@@ -69,6 +77,30 @@ $route['translate_uri_dashes'] = FALSE;
 $route['admin'] = 'Admin/index';
 $route['admin/login'] = 'Admin/login';
 $route['admin/logout'] = 'Admin/logout';
+
+//profile lpm routes (admin)
+$route['admin/profile-lpm'] = 'Profilelpm/index';
+$route['admin/profile-lpm/create'] = 'Profilelpm/create';
+$route['admin/profile-lpm/store'] = 'Profilelpm/store';
+$route['admin/profile-lpm/edit/(:num)'] = 'Profilelpm/edit/$1';
+$route['admin/profile-lpm/update/(:num)'] = 'Profilelpm/update/$1';
+$route['admin/profile-lpm/delete/(:num)'] = 'Profilelpm/delete/$1';
+$route['admin/profile-lpm/toggle/(:num)'] = 'Profilelpm/toggle_status/$1';
+
+// Admin User Management Routes
+$route['admin/user-management'] = 'UserManagement/index';
+$route['admin/user-management/create'] = 'UserManagement/create';
+$route['admin/user-management/store'] = 'UserManagement/store';
+$route['admin/user-management/detail/(:num)'] = 'UserManagement/detail/$1';
+$route['admin/user-management/edit/(:num)'] = 'UserManagement/edit/$1';
+$route['admin/user-management/update/(:num)'] = 'UserManagement/update/$1';
+$route['admin/user-management/delete/(:num)'] = 'UserManagement/delete/$1';
+$route['admin/user-management/toggle/(:num)'] = 'UserManagement/toggle_status/$1';
+$route['admin/user-management/change-role/(:num)'] = 'UserManagement/change_role/$1';
+$route['admin/user-management/reset-password/(:num)'] = 'UserManagement/reset_password/$1';
+$route['admin/user-management/remove-avatar/(:num)'] = 'UserManagement/remove_avatar/$1';
+$route['admin/user-management/search'] = 'UserManagement/search';
+$route['admin/user-management/export'] = 'UserManagement/export';
 
 // Admin Struktur Routes - Using main controller directory
 $route['admin/struktur/detail/(:num)'] = 'Struktur/detail/$1';
@@ -135,4 +167,12 @@ $route['admin/settingconfig/delete/(:num)'] = 'Settingconfig/delete/$1';
 $route['admin/(:any)/(:any)/(:any)'] = 'backend/$1/$2/$3';
 $route['admin/(:any)/(:any)'] = 'backend/$1/$2';
 $route['admin/(:any)'] = 'backend/$1';
+
+// user management
+$route['admin/user-management'] = 'UserManagement/index';
+$route['admin/user-management/create'] = 'UserManagement/create';
+$route['admin/user-management/store'] = 'UserManagement/store';
+$route['admin/user-management/edit/(:num)'] = 'UserManagement/edit/$1';
+$route['admin/user-management/update/(:num)'] = 'UserManagement/update/$1';
+$route['admin/user-management/delete/(:num)'] = 'UserManagement/delete/$1';
 

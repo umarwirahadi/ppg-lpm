@@ -5,7 +5,11 @@ class Contact extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
+		$this->load->library('auth');
 		$this->load->model('ContactModel');
+		
+		// Check authentication
+		$this->auth->require_login();
 	}
 
 	/**

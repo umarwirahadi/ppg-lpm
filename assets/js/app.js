@@ -364,7 +364,7 @@ $(document).ready(function() {
 // DataTable initialization for dokumenTable with search and export hookup
 $(function () {
     if (typeof jQuery === 'undefined' || typeof jQuery.fn.dataTable === 'undefined') return;
-    var tableSelector = '#dokumenTable';
+    var tableSelector = '.dataTable';
     if (!$(tableSelector).length) return;
 
     // Destroy existing instance if any (safe re-init)

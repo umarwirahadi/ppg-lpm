@@ -191,7 +191,7 @@
         <div class="sidebar-header">
             <div class="text-center">
                 <i class="fas fa-shield-alt fa-2x mb-2"></i>
-                <h5>Admin LPM</h5>
+                <h5><?= $this->session->userdata('full_name') ?? '-' ?></h5>
                 <small>Politeknik Piksi Ganesha</small>
             </div>
         </div>
@@ -201,6 +201,12 @@
                 <a href="<?= base_url('admin') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'dashboard') ? 'active' : '' ?>">
                     <i class="fas fa-tachometer-alt"></i>
                     Dashboard
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="<?= base_url('admin/profile-lpm') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'profile') ? 'active' : '' ?>">
+                    <i class="fas fa-building"></i>
+                    Profile LPM
                 </a>
             </div>
             <div class="menu-item">
@@ -227,13 +233,7 @@
                     <i class="fas fa-graduation-cap"></i>
                     Program Studi
                 </a>
-            </div>            
-            <div class="menu-item">
-                <a href="<?= base_url('admin/akreditasi') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'akreditasi') ? 'active' : '' ?>">
-                    <i class="fas fa-certificate"></i>
-                    Akreditasi
-                </a>
-            </div>
+            </div>                        
             <div class="menu-item">
                 <a href="<?= base_url('admin/laporan') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'laporan') ? 'active' : '' ?>">
                     <i class="fas fa-chart-bar"></i>
@@ -244,6 +244,18 @@
                 <a href="<?= base_url('admin/settingconfig') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'pengaturan') ? 'active' : '' ?>">
                     <i class="fas fa-cog"></i>
                     Pengaturan
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="<?= base_url('admin/user-management') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'user-management') ? 'active' : '' ?>">
+                    <i class="fas fa-users"></i>
+                    User Management
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="<?= base_url('admin/logout') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'logout') ? 'active' : '' ?>">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
                 </a>
             </div>
         </nav>
@@ -257,16 +269,16 @@
                 <button class="mobile-menu-btn" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h6>Sistem Administrasi LPM</h6>
+                <h6>Sistem Administrasi Website LPM</h6>
             </div>
             <div class="header-right">
                 <div class="user-info">
                     <div class="user-avatar">
-                        <?= strtoupper(substr($this->session->userdata('admin_name') ?? 'A', 0, 1)) ?>
+                        <?= strtoupper(substr($this->session->userdata('full_name') ?? 'A', 0, 1)) ?>
                     </div>
                     <div>
                         <small class="text-muted d-block">Selamat datang,</small>
-                        <strong><?= $this->session->userdata('admin_name') ?? 'Administrator' ?></strong>
+                        <strong><?= $this->session->userdata('full_name') ?? 'Administrator' ?></strong>
                     </div>
                     <div class="dropdown">
                         <button class="btn btn-link text-muted" type="button" data-bs-toggle="dropdown">

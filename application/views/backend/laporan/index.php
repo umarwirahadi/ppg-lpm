@@ -17,7 +17,7 @@
         </div>
         <div class="card-body p-2">
             <div class="table-responsive">
-                <table id="laporanTable" class="table table-bordered table-striped mb-0">
+                <table class="table table-bordered table-striped mb-0 dataTable">
                     <thead class="thead-light">
                         <tr>
                             <th>ID</th>
