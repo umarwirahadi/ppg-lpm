@@ -51,5 +51,10 @@ class DokumenModel extends CI_Model {
 		return $this->db->update($this->table, $data);
 	}
 
+	public function delete_dokumen($id) {
+		$this->db->where('id', $id);
+		return $this->db->delete($this->table);
+	}
+
 	
 }

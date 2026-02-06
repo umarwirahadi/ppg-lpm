@@ -132,5 +132,24 @@ class Dokumen extends CI_Controller {
 		redirect('dokumen');
 	}
 
+	public function delete($id){
+		$dokumen = $this->DokumenModel->get_dokumen_by_id($id);
+		if(!$dokumen){
+			show_404();
+		}
+
+		// Delete file from server
+		if (!empty($dokumen->file_url)) {
+			$path = FCPATH . $dokumen->file_url;
+			if (file_exists($path)) {
+				@unlink($path);
+			}
+		}
+
+		$this->DokumenModel->delete_dokumen($id);
+		$this->session->set_flashdata('success', 'Dokumen berhasil dihapus.');
+		redirect('dokumen');
+	}
+
 	
 }
