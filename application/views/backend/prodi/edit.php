@@ -48,10 +48,16 @@
                         <label for="akreditasi" class="form-label">Akreditasi</label>
                         <select id="akreditasi" name="akreditasi" class="form-control">
                             <option value="" <?= (empty($prodi['akreditasi']) ? 'selected' : '') ?>>Pilih</option>
-                            <option value="A" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'A' ? 'selected' : '') ?>>A</option>
+							<option value="Unggul" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'Unggul' ? 'selected' : '') ?>>Unggul</option>
+							<option value="Baik Sekali" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'Baik Sekali' ? 'selected' : '') ?>>Baik Sekali</option>
+							<option value="Baik" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'Baik' ? 'selected' : '') ?>>Baik</option>
+							<option value="Cukup" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'Cukup' ? 'selected' : '') ?>>Cukup</option>
+							<option value="Kurang" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'Kurang' ? 'selected' : '') ?>>Kurang</option>
+							<option value="Tidak Terakreditasi" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'Tidak Terakreditasi' ? 'selected' : '') ?>>Tidak Terakreditasi</option>
+							<!-- <option value="A" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'A' ? 'selected' : '') ?>>A</option>
                             <option value="B" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'B' ? 'selected' : '') ?>>B</option>
-                            <option value="C" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'C' ? 'selected' : '') ?>>C</option>
-                            <option value="-" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === '-' ? 'selected' : '') ?>>-</option>
+                            <option value="C" <?= (isset($prodi['akreditasi']) && $prodi['akreditasi'] === 'C' ? 'selected' : '') ?>>C</option> -->
+
                         </select>
                     </div>
                     <div class="col-md-4 mb-3">

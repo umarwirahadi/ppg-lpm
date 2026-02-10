@@ -55,7 +55,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= (isset($active_menu) && $active_menu == 'prodi') ? 'active' : '' ?>" href="<?= base_url('data-program-studi') ?>">Prodi</a>
+                        <a class="nav-link <?= (isset($active_menu) && $active_menu == 'prodi') ? 'active' : '' ?>" href="<?= base_url('data-program-studi') ?>">Program Studi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= (isset($active_menu) && $active_menu == 'laporan') ? 'active' : '' ?>" href="<?= base_url('data-laporan') ?>">Laporan</a>

@@ -47,10 +47,12 @@
 						<label for="akreditasi" class="form-label">Akreditasi</label>
 						<select id="akreditasi" name="akreditasi" class="form-control">
 							<option value="">Pilih</option>
-							<option value="A">A</option>
-							<option value="B">B</option>
-							<option value="C">C</option>
-							<option value="-">-</option>
+							<option value="Unggul">Unggul</option>
+							<option value="Baik Sekali">Baik Sekali</option>
+							<option value="Baik">Baik</option>
+							<option value="Cukup">Cukup</option>
+							<option value="Kurang">Kurang</option>
+							<option value="Tidak Terakreditasi">Tidak Terakreditasi</option>
 						</select>
 					</div>
 					<div class="col-md-4 mb-3">
