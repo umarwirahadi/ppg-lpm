@@ -44,6 +44,11 @@ class Template {
 	public function render($view, $data = [], $layout = 'default') {
 		// Merge data
 		$template_data = array_merge($this->data, $data);
+
+		// Auth/session context for header/footer
+		$this->ci->load->library(['session', 'auth']);
+		$template_data['is_logged_in'] = $this->ci->auth->is_logged_in();
+		$template_data['current_user'] = $this->ci->auth->user();
 		
 		// Add meta information
 		$template_data['page_title'] = $this->title;

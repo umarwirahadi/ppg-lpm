@@ -62,23 +62,6 @@ $(document).ready(function() {
 
             function normalize(s) { return (s||'').toString().trim().toLowerCase(); }
 
-            function filterRows(q) {
-                var rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
-                var visibleCount = 0;
-                rows.forEach(function (tr) {
-                    var title = normalize(tr.cells[0] && tr.cells[0].innerText);
-                    var desc = normalize(tr.cells[1] && tr.cells[1].innerText);
-                    var ok = q === '' || title.indexOf(q) !== -1 || desc.indexOf(q) !== -1;
-                    tr.style.display = ok ? '' : 'none';
-                    if (ok) visibleCount++;
-                });
-                if (emptyState) emptyState.style.display = visibleCount === 0 ? '' : 'none';
-            }
-
-            if (input) {
-                input.addEventListener('input', function () { filterRows(normalize(this.value)); });
-            }
-
             // If server didn't render rows, try fetching JSON from a conventional endpoint
             (function tryFetch() {
                 if (!tbody) return;

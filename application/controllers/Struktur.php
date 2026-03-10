@@ -9,8 +9,8 @@ class Struktur extends CI_Controller {
         $this->load->model('StrukturModel');
         $this->load->helper(['url', 'form', 'file']);
         
-        // Check authentication
-        $this->auth->require_login();
+        // Admin only
+        $this->auth->require_role('admin', 'admin/laporan');
     }
 
     /**

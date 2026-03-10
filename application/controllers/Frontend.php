@@ -5,7 +5,7 @@ class Frontend extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->library('template');
+		$this->load->library(['template', 'auth', 'session']);
 		$this->load->model(['StrukturModel', 'DokumenModel','KegiatanModel']);
 	}
 
@@ -200,21 +200,64 @@ class Frontend extends CI_Controller {
 
 
 	public function dokumen() {
+		$this->load->library('pagination');
+		$q = trim((string) $this->input->get('q', true));
+		$perPage = 10;
+		$page = (int) $this->input->get('page');
+		if ($page < 1) {
+			$page = 1;
+		}
+		$offset = ($page - 1) * $perPage;
+
+		$config = [];
+		$config['base_url'] = site_url('dokumen-spmi');
+		$config['total_rows'] = $this->DokumenModel->count_all_dokumen(true, $q);
+		$config['per_page'] = $perPage;
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = 'page';
+		$config['use_page_numbers'] = true;
+		$config['reuse_query_string'] = true;
+
+		// Bootstrap 5 pagination markup
+		$config['full_tag_open'] = '<nav aria-label="Dokumen pagination"><ul class="pagination justify-content-center">';
+		$config['full_tag_close'] = '</ul></nav>';
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tag_close'] = '</li>';
+		$config['next_tag_open'] = '<li class="page-item">';
+		$config['next_tag_close'] = '</li>';
+		$config['prev_tag_open'] = '<li class="page-item">';
+		$config['prev_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="page-item active" aria-current="page"><span class="page-link">';
+		$config['cur_tag_close'] = '</span></li>';
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+		$config['attributes'] = ['class' => 'page-link'];
+		$config['first_link'] = '&laquo;';
+		$config['last_link'] = '&raquo;';
+		$config['prev_link'] = '&lsaquo;';
+		$config['next_link'] = '&rsaquo;';
+
+		$this->pagination->initialize($config);
+
 		$this->template->set_title('Dokumen SPMI - LPM Politeknik Piksi Ganesha')
 			->set_meta_description('Akses dan unduh dokumen-dokumen penting terkait Sistem Penjaminan Mutu Internal (SPMI) di Politeknik Piksi Ganesha.')
 			->set_meta_keywords('dokumen SPMI, unduh dokumen, penjaminan mutu, Politeknik Piksi Ganesha');
 
 		$data = [
-			'active_menu' => 'dokumen'
+			'active_menu' => 'dokumen',
+			'dokumen_list' => $this->DokumenModel->get_all_dokumen(true, $perPage, $offset, $q),
+			'q' => $q,
+			'pagination' => $this->pagination->create_links()
 		];
-		$data['dokumen_list'] = $this->DokumenModel->get_all_dokumen(true);
 
 		$this->template->render('frontend/dokumen', $data);
 	}
 
 	public function detail_dokumen($id = null) {
 		if (!$id) {
-			redirect('dokumen');
+			redirect('dokumen-spmi');
 			return;
 		}
 
@@ -224,9 +267,10 @@ class Frontend extends CI_Controller {
 			return;
 		}
 
-		$this->template->set_title($doc['judul'] . ' - Dokumen SPMI LPM Politeknik Piksi Ganesha')
-			->set_meta_description('Detail dokumen ' . $doc['judul'] . ' terkait Sistem Penjaminan Mutu Internal di Politeknik Piksi Ganesha')
-			->set_meta_keywords('dokumen SPMI, ' . strtolower($doc['judul']) . ', Politeknik Piksi Ganesha');
+		$docTitle = isset($doc['title']) ? $doc['title'] : (isset($doc['judul']) ? $doc['judul'] : 'Dokumen');
+		$this->template->set_title($docTitle . ' - Dokumen SPMI LPM Politeknik Piksi Ganesha')
+			->set_meta_description('Detail dokumen ' . $docTitle . ' terkait Sistem Penjaminan Mutu Internal di Politeknik Piksi Ganesha')
+			->set_meta_keywords('dokumen SPMI, ' . strtolower($docTitle) . ', Politeknik Piksi Ganesha');
 
 		$data = [
 			'active_menu' => 'dokumen',
@@ -234,6 +278,73 @@ class Frontend extends CI_Controller {
 		];
 
 		$this->template->render('frontend/detail-dokumen', $data);
+	}
+
+	public function dokumen_preview($id = null) {
+		$this->auth->require_login('login');
+		if (!$id) {
+			show_404();
+			return;
+		}
+
+		$doc = $this->DokumenModel->get_dokumen_by_id($id, true);
+		if (!$doc || empty($doc['file_url'])) {
+			show_404();
+			return;
+		}
+
+		$this->_serve_dokumen_file($doc['file_url'], 'inline');
+	}
+
+	public function dokumen_download($id = null) {
+		$this->auth->require_login('login');
+		if (!$id) {
+			show_404();
+			return;
+		}
+
+		$doc = $this->DokumenModel->get_dokumen_by_id($id, true);
+		if (!$doc || empty($doc['file_url'])) {
+			show_404();
+			return;
+		}
+
+		$this->_serve_dokumen_file($doc['file_url'], 'attachment');
+	}
+
+	private function _serve_dokumen_file($fileUrl, $disposition = 'inline') {
+		$fileUrl = (string) $fileUrl;
+		$relativePath = str_replace('\\', '/', ltrim($fileUrl, '/\\'));
+		if ($relativePath === '' || strpos($relativePath, '..') !== false) {
+			show_404();
+			return;
+		}
+		if (strpos($relativePath, 'assets/documents/') !== 0) {
+			show_404();
+			return;
+		}
+
+		$base = realpath(FCPATH . 'assets/documents');
+		$real = realpath(FCPATH . $relativePath);
+		if ($real === false || $base === false || strpos($real, $base) !== 0 || !is_file($real)) {
+			show_404();
+			return;
+		}
+
+		$mime = @mime_content_type($real);
+		if (!$mime) {
+			$mime = 'application/octet-stream';
+		}
+
+		$filename = basename($real);
+		$disposition = ($disposition === 'attachment') ? 'attachment' : 'inline';
+
+		header('Content-Type: ' . $mime);
+		header('Content-Disposition: ' . $disposition . '; filename="' . $filename . '"');
+		header('Content-Length: ' . filesize($real));
+		header('X-Content-Type-Options: nosniff');
+		readfile($real);
+		exit;
 	}
 
 	public function prodi(){
@@ -277,13 +388,25 @@ class Frontend extends CI_Controller {
 
 	public function laporan() {
 		$this->load->model('LaporanModel');
+		$q = trim((string) $this->input->get('q', true));
 		$this->template->set_title('Laporan - LPM Politeknik Piksi Ganesha')
 			->set_meta_description('Kumpulan laporan terkait penjaminan mutu pendidikan di Politeknik Piksi Ganesha yang disusun oleh Lembaga Penjaminan Mutu (LPM).')
 			->set_meta_keywords('laporan mutu, laporan pendidikan, LPM, Politeknik Piksi Ganesha, penjaminan mutu');
 
+		$laporanList = $this->LaporanModel->get_all_laporan();
+		if ($q !== '') {
+			$needle = mb_strtolower($q);
+			$laporanList = array_values(array_filter($laporanList, function ($row) use ($needle) {
+				$title = isset($row->title) ? mb_strtolower((string) $row->title) : '';
+				$desc = isset($row->description) ? mb_strtolower((string) $row->description) : '';
+				return (strpos($title, $needle) !== false) || (strpos($desc, $needle) !== false);
+			}));
+		}
+
 		$data = [
 			'active_menu' => 'laporan',
-			'laporan_list' => $this->LaporanModel->get_all_laporan()
+			'laporan_list' => $laporanList,
+			'q' => $q,
 		];
 
 		$this->template->render('frontend/laporan', $data);
@@ -292,7 +415,7 @@ class Frontend extends CI_Controller {
 	public function detail_laporan($id = null) {
 		$this->load->model('LaporanModel');
 		if (!$id) {
-			redirect('laporan');
+			redirect('data-laporan');
 			return;
 		}
 
@@ -312,6 +435,40 @@ class Frontend extends CI_Controller {
 		];
 
 		$this->template->render('frontend/detail-laporan', $data);
+	}
+
+	public function laporan_preview($id = null) {
+		$this->auth->require_login('login');
+		$this->load->model('LaporanModel');
+		if (!$id) {
+			show_404();
+			return;
+		}
+
+		$laporan = $this->LaporanModel->get_laporan_by_id($id);
+		if (!$laporan || empty($laporan->file_path)) {
+			show_404();
+			return;
+		}
+
+		$this->_serve_dokumen_file($laporan->file_path, 'inline');
+	}
+
+	public function laporan_download($id = null) {
+		$this->auth->require_login('login');
+		$this->load->model('LaporanModel');
+		if (!$id) {
+			show_404();
+			return;
+		}
+
+		$laporan = $this->LaporanModel->get_laporan_by_id($id);
+		if (!$laporan || empty($laporan->file_path)) {
+			show_404();
+			return;
+		}
+
+		$this->_serve_dokumen_file($laporan->file_path, 'attachment');
 	}
 
 	public function settings() {

@@ -9,21 +9,22 @@ class Dokumen extends CI_Controller {
 		$this->load->library(['template', 'auth']);
 		$this->load->model('DokumenModel');
 		
-		// Check authentication
-		$this->auth->require_login();
+		// Admin/Editor only
+		$this->auth->require_editor();
 	}
 
 	public function index() {
 				// Dashboard data
 		   $data['title'] = 'Daftar Dokumen SPMI';
+		   $data['active_menu'] = 'dokumen';
 		   $data['dokumen_list'] = $this->DokumenModel->get_all_dokumen();
 		   $this->template->backend('backend/dokumen/index', $data);
 	}
 
 	public function create() {
 	
-
 		$data['title'] = 'Tambah Dokumen SPMI';
+		$data['active_menu'] = 'dokumen';
 		$this->template->backend('backend/dokumen/create', $data);
 	}
 
@@ -70,6 +71,7 @@ class Dokumen extends CI_Controller {
 			show_404();
 		}
 		$data['title'] = 'Edit Dokumen SPMI';
+		$data['active_menu'] = 'dokumen';
 		$data['dokumen'] = $dokumen;
 		$this->template->backend('backend/dokumen/edit', $data);
 	}

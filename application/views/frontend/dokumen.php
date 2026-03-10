@@ -5,7 +5,16 @@
             <p class="text-muted mb-0">Akses dan unduh dokumen penting terkait Sistem Penjaminan Mutu Internal.</p>
         </div>
         <div class="col-md-4 mt-3 mt-md-0 text-md-end">
-            <input id="frontendDokumenSearch" class="form-control form-control-sm d-inline-block" style="max-width:320px;" placeholder="Cari dokumen..." aria-label="Cari dokumen">
+            <form action="<?= site_url('dokumen-spmi') ?>" method="get" class="d-inline">
+                <input
+                    id="frontendDokumenSearch"
+                    name="q"
+                    value="<?= htmlspecialchars($q ?? '') ?>"
+                    class="form-control form-control-sm d-inline-block"
+                    style="max-width:320px;"
+                    placeholder="Cari dokumen..."
+                    aria-label="Cari dokumen">
+            </form>
         </div>
     </div>
 
@@ -13,6 +22,7 @@
         <table id="dokumenTable" class="table table-hover table-sm align-middle">
             <thead>
                 <tr>
+					<th>No</th>
                     <th>Judul</th>
                     <th class="d-none d-sm-table-cell">Deskripsi</th>
                     <th>Status</th>
@@ -22,37 +32,53 @@
             </thead>
             <tbody>
                 <?php if (!empty($dokumen_list) && is_array($dokumen_list)): ?>
-                    <?php foreach ($dokumen_list as $dokumen): ?>
+                    <?php $no = 1; foreach ($dokumen_list as $dokumen): ?>
                         <tr>
-                            <td><?= htmlspecialchars($dokumen->title) ?></td>
-                            <td class="d-none d-sm-table-cell text-muted small"><?= htmlspecialchars(mb_strimwidth(strip_tags($dokumen->description), 0, 120, '...')) ?></td>
+                            <td><?= $no++ ?></td>
+                            <td><?= htmlspecialchars($dokumen['title']) ?></td>
+                            <td class="d-none d-sm-table-cell text-muted small"><?= htmlspecialchars(mb_strimwidth(strip_tags($dokumen['description']), 0, 120, '...')) ?></td>
                             <td>
-                                <?php if (!empty($dokumen->is_active) && $dokumen->is_active): ?>
+                                <?php if (!empty($dokumen['is_active']) && $dokumen['is_active']): ?>
                                     <span class="badge bg-success">Aktif</span>
                                 <?php else: ?>
                                     <span class="badge bg-secondary">Nonaktif</span>
                                 <?php endif; ?>
                             </td>
-                            <td class="text-muted small"><?= date('d M Y', strtotime($dokumen->created_at ?? '')) ?></td>
+                            <td class="text-muted small"><?= date('d M Y', strtotime($dokumen['created_at'] ?? '')) ?></td>
                             <td class="text-end">
                                 <div class="btn-group" role="group">
-                                    <?php if (!empty($dokumen->file_url)): ?>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary btn-preview" data-file="<?= base_url($dokumen->file_url) ?>">Preview</button>
-                                        <a href="<?= base_url($dokumen->file_url) ?>" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener">Unduh</a>
+                                    <?php if (!empty($dokumen['file_url'])): ?>
+                                        <?php if (!empty($is_logged_in)): ?>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary btn-preview" data-file="<?= site_url('dokumen-spmi/preview/' . ($dokumen['id'] ?? 0)) ?>">Preview</button>
+                                            <a href="<?= site_url('dokumen-spmi/download/' . ($dokumen['id'] ?? 0)) ?>" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener">Unduh</a>
+                                        <?php else: ?>
+                                            <a href="<?= site_url('dokumen-spmi/preview/' . ($dokumen['id'] ?? 0)) ?>" class="btn btn-sm btn-outline-secondary">Preview</a>
+                                            <a href="<?= site_url('dokumen-spmi/download/' . ($dokumen['id'] ?? 0)) ?>" class="btn btn-sm btn-outline-primary">Unduh</a>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         <button class="btn btn-sm btn-outline-secondary" disabled>Tidak ada file</button>
                                     <?php endif; ?>
-                                    <a href="<?= site_url('dokumen') ?>" class="btn btn-sm btn-outline-dark">Lihat</a>
+                                    <a href="<?= site_url('frontend/detail_dokumen/' . ($dokumen['id'] ?? '')) ?>" class="btn btn-sm btn-outline-dark">Lihat</a>
                                 </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <!-- Empty tbody: JS will attempt to fetch data from the server endpoint -->
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">
+                            Tidak ada dokumen ditemukan.
+                        </td>
+                    </tr>
                 <?php endif; ?>
             </tbody>
         </table>
     </div>
+
+    <?php if (!empty($pagination)): ?>
+        <div class="mt-4">
+            <?= $pagination ?>
+        </div>
+    <?php endif; ?>
 
     <div id="dokumenEmptyState" class="text-center py-4" style="display:none;">
         <h5 class="text-muted">Belum ada dokumen tersedia.</h5>
@@ -95,7 +121,7 @@
 window.LPM = window.LPM || {};
 window.LPM.urls = {
     dokumenJson: '<?= site_url("dokumen/json") ?>',
-    dokumenIndex: '<?= site_url("dokumen") ?>',
+    dokumenIndex: '<?= site_url("dokumen-spmi") ?>',
     bootstrapLocal: '<?= base_url("js/bootstrap.bundle.min.js") ?>'
 };
 </script>

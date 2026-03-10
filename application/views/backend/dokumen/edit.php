@@ -9,15 +9,15 @@
                 <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
             <?php endif; ?>
 
-            <form id="dokumenForm" method="post" action="<?= site_url('admin/dokumen/update/' . $dokumen->id) ?>" enctype="multipart/form-data">
+            <form id="dokumenForm" method="post" action="<?= site_url('admin/dokumen/update/' . $dokumen['id']) ?>" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="title" class="form-label">Judul <span class="text-danger">*</span></label>
-                    <input id="title" name="title" type="text" class="form-control form-control-lg" required placeholder="Masukkan judul dokumen" value="<?= htmlspecialchars($dokumen->title) ?>">
+                    <input id="title" name="title" type="text" class="form-control form-control-lg" required placeholder="Masukkan judul dokumen" value="<?= htmlspecialchars($dokumen['title']) ?>">
                 </div>
 
                 <div class="mb-3">
                     <label for="description" class="form-label">Deskripsi</label>
-                    <textarea id="description" name="description" class="form-control" rows="4" placeholder="Ringkasan atau keterangan singkat"><?= htmlspecialchars($dokumen->description) ?></textarea>
+                    <textarea id="description" name="description" class="form-control" rows="4" placeholder="Ringkasan atau keterangan singkat"><?= htmlspecialchars($dokumen['description']) ?></textarea>
                 </div>
 
                 <div class="mb-3">
@@ -26,11 +26,11 @@
                         <input id="file" name="file" type="file" class="form-control" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                         <button id="clearFile" type="button" class="btn btn-outline-secondary">Clear</button>
                     </div>
-                    <small id="fileHelp" class="form-text text-muted">Ukuran maksimal disesuaikan oleh server. File sebelumnya: <a href="<?= site_url($dokumen->file_url) ?>"><?= htmlspecialchars(basename($dokumen->file_url)) ?></a></small>
+                    <small id="fileHelp" class="form-text text-muted">Ukuran maksimal disesuaikan oleh server. File sebelumnya: <a href="<?= site_url($dokumen['file_url']) ?>"><?= htmlspecialchars(basename($dokumen['file_url'])) ?></a></small>
                 </div>
 
                 <div class="mb-3 form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="is_active" name="is_active" <?= $dokumen->is_active ? 'checked' : '' ?>>
+                    <input class="form-check-input" type="checkbox" id="is_active" name="is_active" <?= $dokumen['is_active'] ? 'checked' : '' ?>>
                     <label class="form-check-label" for="is_active">Aktif</label>
                 </div>
 

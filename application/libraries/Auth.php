@@ -211,7 +211,7 @@ class Auth {
     /**
      * Require specific role - redirect if not authorized
      */
-    public function require_role($role, $redirect_url = 'admin') {
+    public function require_role($role, $redirect_url = 'dashboard') {
         $this->require_login();
 
         if (!$this->has_role($role)) {

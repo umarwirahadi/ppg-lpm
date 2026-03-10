@@ -33,21 +33,21 @@
 						<?php if (!empty($dokumen_list)): ?>
 							<?php foreach ($dokumen_list as $dokumen): ?>
 								<tr>
-									<td><?= htmlspecialchars($dokumen->id) ?></td>
-									<td><?= htmlspecialchars($dokumen->title) ?></td>
-									<td><?= htmlspecialchars($dokumen->description) ?></td>
+									<td><?= htmlspecialchars($dokumen['id']) ?></td>
+									<td><?= htmlspecialchars($dokumen['title']) ?></td>
+									<td><?= htmlspecialchars($dokumen['description']) ?></td>
 									<td>
-										<?php if (!empty($dokumen->file_url)): ?>
-											<a href="<?= base_url($dokumen->file_url) ?>" target="_blank">Download</a>
+										<?php if (!empty($dokumen['file_url'])): ?>
+											<a href="<?= base_url($dokumen['file_url']) ?>" target="_blank">Download</a>
 										<?php else: ?>
 											-
 										<?php endif; ?>
 									</td>
-									<td><?= $dokumen->is_active ? 'Aktif' : 'Nonaktif' ?></td>
-									<td><?= htmlspecialchars($dokumen->created_at) ?></td>
+									<td><?= $dokumen['is_active'] ? 'Aktif' : 'Nonaktif' ?></td>
+									<td><?= htmlspecialchars($dokumen['created_at']) ?></td>
 									<td>
-										<a href="<?= site_url('admin/dokumen/edit/' . $dokumen->id) ?>" class="btn btn-sm btn-warning">Edit</a>
-										<a href="<?= site_url('admin/dokumen/delete/' . $dokumen->id) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus dokumen ini?');">Hapus</a>
+										<a href="<?= site_url('admin/dokumen/edit/' . $dokumen['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
+										<a href="<?= site_url('admin/dokumen/delete/' . $dokumen['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus dokumen ini?');">Hapus</a>
 									</td>
 								</tr>
 							<?php endforeach; ?>

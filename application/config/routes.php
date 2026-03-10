@@ -52,9 +52,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'frontend';
 $route['profile/struktur-organisasi'] = 'frontend/struktur_organisasi';
 $route['dokumen-spmi'] = 'frontend/dokumen';
+$route['dokumen-spmi/preview/(:num)'] = 'frontend/dokumen_preview/$1';
+$route['dokumen-spmi/download/(:num)'] = 'frontend/dokumen_download/$1';
+
+// Auth-gated proxy for direct assets/documents/* URLs
+$route['files/documents'] = 'files/documents';
+$route['files/documents/(.+)'] = 'files/documents/$1';
 $route['data-program-studi'] = 'frontend/prodi';
 $route['data-program-studi/(:num)'] = 'frontend/detail_prodi/$1';
 $route['data-laporan'] = 'frontend/laporan';
+$route['data-laporan/preview/(:num)'] = 'frontend/laporan_preview/$1';
+$route['data-laporan/download/(:num)'] = 'frontend/laporan_download/$1';
 $route['data-laporan/(:num)'] = 'frontend/detail_laporan/$1';
 
 // Profile LPM Routes (Frontend)
@@ -77,6 +85,12 @@ $route['translate_uri_dashes'] = FALSE;
 $route['admin'] = 'Admin/index';
 $route['admin/login'] = 'Admin/login';
 $route['admin/logout'] = 'Admin/logout';
+
+// Public auth routes (guest/user)
+$route['login'] = 'account/login';
+$route['register'] = 'account/register';
+$route['logout'] = 'account/logout';
+$route['dashboard'] = 'account/dashboard';
 
 //profile lpm routes (admin)
 $route['admin/profile-lpm'] = 'Profilelpm/index';

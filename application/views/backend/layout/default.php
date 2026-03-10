@@ -106,6 +106,19 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 0;
+        }
+
+        .header-left h6 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         
         .header-left h6 {
             margin: 0;
@@ -139,6 +152,36 @@
         
         .content-wrapper {
             padding: 2rem;
+        }
+
+        /* Prevent horizontal overflow on small screens */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 1rem;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .main-header {
+                height: auto;
+                min-height: var(--header-height);
+                padding: 0.75rem 1rem;
+                gap: 0.75rem;
+                flex-wrap: wrap;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .user-text {
+                display: none;
+            }
+
+            .sidebar {
+                width: min(var(--sidebar-width), 90vw);
+            }
         }
         
         /* Cards */
@@ -186,72 +229,91 @@
     </style>
 </head>
 <body>
+    <?php
+        $currentRole = (string) ($this->session->userdata('role') ?? '');
+        $isEditorOnly = ($currentRole === 'editor');
+    ?>
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="text-center">
-                <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                <!-- <i class="fas fa-shield-alt fa-2x mb-2"></i> -->
+				<img src="<?= base_url('assets/img/logo.jpg') ?>" alt="Logo" class="img-fluid mb-2" style="max-width: 80px; border-radius: 50%;">
                 <h5><?= $this->session->userdata('full_name') ?? '-' ?></h5>
                 <small>Politeknik Piksi Ganesha</small>
             </div>
         </div>
         
         <nav class="sidebar-menu">
-            <div class="menu-item">
-                <a href="<?= base_url('admin') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'dashboard') ? 'active' : '' ?>">
-                    <i class="fas fa-tachometer-alt"></i>
-                    Dashboard
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="<?= base_url('admin/profile-lpm') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'profile') ? 'active' : '' ?>">
-                    <i class="fas fa-building"></i>
-                    Profile LPM
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="<?= base_url('admin/kegiatan') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'kegiatan') ? 'active' : '' ?>">
-                    <i class="fas fa-calendar-alt"></i>
-                    Kegiatan
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="<?= base_url('admin/struktur') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'struktur') ? 'active' : '' ?>">
-                    <i class="fas fa-sitemap"></i>
-                    Struktur Organisasi
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="<?= base_url('admin/dokumen') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'dokumen') ? 'active' : '' ?>">
-                    <i class="fas fa-file-alt"></i>
-                    Dokumen SPMI
-                </a>
-            </div>
-            
-            <div class="menu-item">
-                <a href="<?= base_url('admin/prodi') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'prodi') ? 'active' : '' ?>">
-                    <i class="fas fa-graduation-cap"></i>
-                    Program Studi
-                </a>
-            </div>                        
-            <div class="menu-item">
-                <a href="<?= base_url('admin/laporan') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'laporan') ? 'active' : '' ?>">
-                    <i class="fas fa-chart-bar"></i>
-                    Laporan AMI
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="<?= base_url('admin/settingconfig') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'pengaturan') ? 'active' : '' ?>">
-                    <i class="fas fa-cog"></i>
-                    Pengaturan
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="<?= base_url('admin/user-management') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'user-management') ? 'active' : '' ?>">
-                    <i class="fas fa-users"></i>
-                    User Management
-                </a>
-            </div>
+            <?php if ($isEditorOnly): ?>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin/dokumen') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'dokumen') ? 'active' : '' ?>">
+                        <i class="fas fa-file-alt"></i>
+                        Dokumen SPMI
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin/laporan') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'laporan') ? 'active' : '' ?>">
+                        <i class="fas fa-chart-bar"></i>
+                        Laporan AMI
+                    </a>
+                </div>
+            <?php else: ?>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'dashboard') ? 'active' : '' ?>">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin/profile-lpm') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'profile') ? 'active' : '' ?>">
+                        <i class="fas fa-building"></i>
+                        Profile LPM
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin/kegiatan') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'kegiatan') ? 'active' : '' ?>">
+                        <i class="fas fa-calendar-alt"></i>
+                        Kegiatan
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin/struktur') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'struktur') ? 'active' : '' ?>">
+                        <i class="fas fa-sitemap"></i>
+                        Struktur Organisasi
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin/dokumen') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'dokumen') ? 'active' : '' ?>">
+                        <i class="fas fa-file-alt"></i>
+                        Dokumen SPMI
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin/prodi') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'prodi') ? 'active' : '' ?>">
+                        <i class="fas fa-graduation-cap"></i>
+                        Program Studi
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin/laporan') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'laporan') ? 'active' : '' ?>">
+                        <i class="fas fa-chart-bar"></i>
+                        Laporan AMI
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin/settingconfig') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'pengaturan') ? 'active' : '' ?>">
+                        <i class="fas fa-cog"></i>
+                        Pengaturan
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= base_url('admin/user-management') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'user-management') ? 'active' : '' ?>">
+                        <i class="fas fa-users"></i>
+                        User Management
+                    </a>
+                </div>
+            <?php endif; ?>
             <div class="menu-item">
                 <a href="<?= base_url('admin/logout') ?>" class="menu-link <?= (isset($active_menu) && $active_menu == 'logout') ? 'active' : '' ?>">
                     <i class="fas fa-sign-out-alt"></i>
@@ -269,14 +331,14 @@
                 <button class="mobile-menu-btn" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h6>Sistem Administrasi Website LPM</h6>
+                <h6>Admin LPM</h6>
             </div>
             <div class="header-right">
                 <div class="user-info">
                     <div class="user-avatar">
                         <?= strtoupper(substr($this->session->userdata('full_name') ?? 'A', 0, 1)) ?>
                     </div>
-                    <div>
+                    <div class="user-text">
                         <small class="text-muted d-block">Selamat datang,</small>
                         <strong><?= $this->session->userdata('full_name') ?? 'Administrator' ?></strong>
                     </div>
@@ -285,13 +347,15 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="<?= base_url('admin/profile') ?>">
-                                <i class="fas fa-user me-2"></i>Profil
-                            </a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('admin/pengaturan') ?>">
-                                <i class="fas fa-cog me-2"></i>Pengaturan
-                            </a></li>
-                            <li><hr class="dropdown-divider"></li>
+                            <?php if (!$isEditorOnly): ?>
+                                <li><a class="dropdown-item" href="<?= base_url('admin/profile') ?>">
+                                    <i class="fas fa-user me-2"></i>Profil
+                                </a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('admin/pengaturan') ?>">
+                                    <i class="fas fa-cog me-2"></i>Pengaturan
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            <?php endif; ?>
                             <li><a class="dropdown-item text-danger" href="<?= base_url('admin/logout') ?>">
                                 <i class="fas fa-sign-out-alt me-2"></i>Logout
                             </a></li>
@@ -310,7 +374,6 @@
     <!-- Scripts -->
 	<script src="<?= base_url('assets/admin/assets/js/core/jquery-3.7.1.min.js') ?>"></script>
 	<script src="<?= base_url('assets/admin/assets/js/plugin/datatables/datatables.min.js') ?>"></script>
-	<script src="<?= base_url('assets/admin/assets/js/plugin/datatables/datatables.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -321,6 +384,16 @@
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('show');
         }
+
+        // Close sidebar after selecting a menu item on mobile
+        document.querySelectorAll('#sidebar .menu-link').forEach(function (link) {
+            link.addEventListener('click', function () {
+                const sidebar = document.getElementById('sidebar');
+                if (window.innerWidth <= 768 && sidebar.classList.contains('show')) {
+                    sidebar.classList.remove('show');
+                }
+            });
+        });
         
         // Close sidebar when clicking outside on mobile
         document.addEventListener('click', function(e) {

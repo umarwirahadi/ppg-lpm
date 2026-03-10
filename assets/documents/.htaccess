@@ -1,0 +1,8 @@
+# Force all document requests through CodeIgniter (auth-gated)
+Options -Indexes
+
+RewriteEngine On
+
+# Route everything under /assets/documents/* to a controller
+RewriteRule ^$ /files/documents [QSA,L]
+RewriteRule ^(.+)$ /files/documents/$1 [QSA,L]

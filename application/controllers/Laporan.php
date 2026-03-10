@@ -18,8 +18,8 @@ class Laporan extends CI_Controller {
 		$this->load->library(['template', 'auth']);
 		$this->load->model('LaporanModel');
 		
-		// Check authentication
-		$this->auth->require_login();
+		// Admin/Editor only
+		$this->auth->require_editor();
 	}
 
 	public function index() {

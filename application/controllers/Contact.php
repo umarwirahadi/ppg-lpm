@@ -8,8 +8,8 @@ class Contact extends CI_Controller {
 		$this->load->library('auth');
 		$this->load->model('ContactModel');
 		
-		// Check authentication
-		$this->auth->require_login();
+		// Admin only
+		$this->auth->require_role('admin', 'admin/laporan');
 	}
 
 	/**

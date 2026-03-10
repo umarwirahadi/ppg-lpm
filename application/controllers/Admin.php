@@ -18,11 +18,20 @@ class Admin extends CI_Controller {
 		parent::__construct();
 		$this->load->library(['template', 'session', 'auth']);
 		$this->load->model('UserModel');
+
+		// Restrict admin area to admin/editor roles (except login/logout)
+		$method = $this->router->method;
+		if (!in_array($method, ['login', 'logout'], true)) {
+			$this->auth->require_role(['admin', 'editor'], 'dashboard');
+		}
 	}
 
 	public function index() {
-		// Check authentication
-		$this->auth->require_login();
+		// Editors can access admin area but should only manage Dokumen/Laporan
+		if ($this->auth->has_role('editor')) {
+			redirect('admin/laporan');
+			return;
+		}
 
 		// Dashboard data
 		$data['title'] = 'Dashboard Admin LPM';
@@ -71,8 +80,16 @@ class Admin extends CI_Controller {
 			$result = $this->auth->login($username, $password, $remember);
 			
 			if ($result['success']) {
-				// Get redirect URL or default to admin dashboard
-				$redirect_url = $this->auth->get_redirect_url('admin');
+				// Viewer cannot enter admin area
+				if ($this->auth->has_role('viewer')) {
+					$redirect_url = $this->auth->get_redirect_url('dashboard');
+					redirect($redirect_url);
+					return;
+				}
+
+				// Editor lands on Laporan by default; admin lands on dashboard
+				$default = $this->auth->has_role('editor') ? 'admin/laporan' : 'admin';
+				$redirect_url = $this->auth->get_redirect_url($default);
 				redirect($redirect_url);
 				return;
 			} else {

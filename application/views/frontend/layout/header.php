@@ -41,7 +41,7 @@
             
             <!-- Navigation Menu -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item">
                         <a class="nav-link <?= (isset($active_menu) && $active_menu == 'home') ? 'active' : '' ?>" href="<?= base_url() ?>">Home</a>
                     </li>
@@ -65,6 +65,18 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= (isset($active_menu) && $active_menu == 'kegiatan') ? 'active' : '' ?>" href="<?= base_url('kegiatan') ?>">Kegiatan</a>
+                    </li>
+
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <div class="d-grid d-lg-flex gap-2">
+                            <?php if (!empty($is_logged_in)): ?>
+                                <a class="btn btn-outline-light btn-sm" href="<?= site_url('dashboard') ?>">Dashboard</a>
+                                <a class="btn btn-light btn-sm" href="<?= site_url('logout') ?>">Logout</a>
+                            <?php else: ?>
+                                <a class="btn btn-outline-light btn-sm" href="<?= site_url('login') ?>">Login</a>
+                                <a class="btn btn-light btn-sm" href="<?= site_url('register') ?>">Register</a>
+                            <?php endif; ?>
+                        </div>
                     </li>
                 </ul>
             </div>

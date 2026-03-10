@@ -13,6 +13,9 @@
     <style>
         body {
             background: linear-gradient(135deg, #2c3e50, #3498db);
+			background-image: url('<?= base_url('assets/img/bg.jpg') ?>');
+			background-size: cover;
+			background-position: center;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -123,9 +126,10 @@
     <div class="login-container">
         <div class="login-header">
             <div class="logo">
-                <i class="fas fa-shield-alt"></i>
+				<img src="<?= base_url('assets/img/logo.png') ?>" alt="Logo" class="img-fluid">
+                <!-- <i class="fas fa-shield-alt"></i> -->
             </div>
-            <h4>Admin LPM</h4>
+            <h4>Halaman admin </h4>
             <p>Lembaga Penjaminan Mutu<br>Politeknik Piksi Ganesha</p>
         </div>
         
@@ -136,7 +140,7 @@
                 </div>
             <?php endif; ?>
             
-            <form method="post" action="<?= base_url('admin/login') ?>">>
+            <form method="post" action="<?= base_url('admin/login') ?>">
                 <div class="form-group">
                     <label for="username" class="form-label">Username</label>
                     <div class="input-group">
@@ -161,12 +165,15 @@
                     <i class="fas fa-sign-in-alt me-2"></i>Masuk
                 </button>
             </form>
-            
-            <div class="text-center mt-3">
-                <small class="text-muted">
-                    <strong>Demo:</strong> Username: admin | Password: admin123
-                </small>
-            </div>
+
+            <div class="d-flex justify-content-between mt-3">
+                <a href="<?= base_url() ?>" class="small text-muted">Kembali ke Beranda</a>
+                <span class="small">
+                    <a href="<?= site_url('login') ?>" class="text-decoration-none">Login Pengguna</a>
+                    <span class="text-muted">·</span>
+                    <a href="<?= site_url('register') ?>" class="text-decoration-none">Register</a>
+                </span>
+            </div>           
         </div>
     </div>
 

@@ -14,7 +14,9 @@ $statusStyle = $statusStyles[$status] ?? ['class' => 'status-default', 'label' =
 $hasFile = !empty($laporan->file_path);
 $fileExt = $hasFile ? strtolower(pathinfo($laporan->file_path, PATHINFO_EXTENSION)) : '';
 $fileName = $hasFile ? basename($laporan->file_path) : '';
-$filePath = $hasFile ? base_url($laporan->file_path) : '';
+$laporanId = isset($laporan->id) ? (int) $laporan->id : 0;
+$filePath = ($hasFile && $laporanId) ? site_url('data-laporan/preview/' . $laporanId) : '';
+$filePathDownload = ($hasFile && $laporanId) ? site_url('data-laporan/download/' . $laporanId) : '';
 
 // File type info
 $fileTypes = [
@@ -142,7 +144,7 @@ $fileType = $fileTypes[$fileExt] ?? ['label' => strtoupper($fileExt) . ' File', 
                                 <span class="file-info__type"><?= $fileType['label'] ?></span>
                             </div>
                         </div>
-                        <a href="<?= $filePath ?>" class="btn-download-main" download>
+                        <a href="<?= htmlspecialchars($filePathDownload) ?>" class="btn-download-main" download>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
                             Download Sekarang
                         </a>

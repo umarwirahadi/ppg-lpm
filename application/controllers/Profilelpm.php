@@ -8,8 +8,8 @@ class Profilelpm extends CI_Controller {
         $this->load->library(['template', 'auth']);
         $this->load->model('ProfileModel');
         
-        // Check authentication
-        $this->auth->require_login();
+        // Admin only
+        $this->auth->require_role('admin', 'admin/laporan');
     }
 
     public function index() {

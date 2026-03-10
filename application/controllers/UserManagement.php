@@ -20,8 +20,8 @@ class UserManagement extends CI_Controller {
         $this->load->helper(['url', 'form']);
         $this->load->model('UserModel');
         
-        // Check authentication - Admin only
-        $this->auth->require_admin();
+        // Admin only
+        $this->auth->require_role('admin', 'admin/laporan');
     }
 
     /**
